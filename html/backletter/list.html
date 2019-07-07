@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/btpTable/bootstrap-table.css" rel="stylesheet">
+    <script src="../../js/btpTable/bootstrap-table.js"></script>
+    <script src="../../js/btpTable/bootstrap-table-zh-CN.js "></script>
+    <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>查看模板</h5>
+                    <div class="ibox-tools">
+                        <a onclick="Open('编辑用户',['600px', '40%'],'edit.html')" class="btn btn-info btn-xs">新建模板</a>
+                    </div>
+                </div>
+                <div class="search" id="search">
+                    <div class="input-group" style="display:inline-block">
+                        <select class="form-control" style="width: 150px" id="fuzzy">
+                            <option value="Name">模板名称</option>
+                            <option value="Number">模板编号</option>
+                        </select>
+                        <input type="text" class="form-control" id="fuzzyVal" style="width: 400px">
+                        <select  class="form-control" id="Type" style="width: 150px">
+                            <option value="3">全部</option>
+                            <option value="0">劳工管理</option>
+                            <option value="1">企业管理</option>
+                            <option value="2">项目管理</option>
+                        </select>
+                        <input type="text" class="form-control"  id="Time" style="width: 200px">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" onclick="search()">搜索</button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var PageSize=10;
+    var Page=1;
+    function fuzzyVal() {
+        var obj = {};
+        var fuzzyVal = $('#fuzzy').val();
+        obj[fuzzyVal] = $('#fuzzyVal').val();
+        return obj;
+    }
+    function search(){
+        init();
+    }
+    function queryParams(params) {
+        return $.extend(fuzzyVal(),{
+            PageSize: params.limit,
+            Page: params.offset / params.limit + 1,
+            Time: $('#Time').val() ,
+            Type: $('#Type').val() ,
+        })
+    }
+
+    $(function () {
+        $('#Time').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+        init()
+    });
+
+    function init() {
+        var columns = [
+            {
+                field: 'Name',
+                title: '模板名称',
+                align: 'center',
+            },
+            {
+                field: 'Number',
+                title: '模板编号' ,
+                align: 'center',
+            },
+            {
+                field: 'Time',
+                title: '创建时间' ,
+                align: 'center',
+            },
+            {
+                field: 'Type',
+                title: '模板类型',
+                align: 'center',
+                formatter: 'Editor2',
+            },
+            {
+                field: 'Description',
+                title: '描述内容',
+                align: 'center',
+            },
+            {
+                title: '操作',
+                align: 'center',
+                formatter: 'Editor',
+            }
+        ];
+        showTable('#table', '/template/query', 'get', 'id', columns);
+    }
+
+    function editSelf(id) {
+        Open('编辑用户',['600px', '40%'],'edit.html?id='+id);
+    }
+
+    function deleteSelf(id) {
+       Confirm('确定删除该文件？', function (index) {
+           Ajax('/template/delete','delete',{ID:id},function (ret) {
+               init();
+               window.top.layer.close(LayerConfirm);
+           })
+       })
+   }
+
+    function Editor(value,row,index) {
+        var str='<a href="javascript:void(0)">打印</a>&nbsp;&nbsp;'+
+                 '<a href="javascript:void(0)" onclick="editSelf('+row.ID+')" >编辑</a>&nbsp;&nbsp;'+
+                '<a href="javascript:void(0)" onclick="deleteSelf('+row.ID+')">删除</a>&nbsp;&nbsp;'+
+                '<a href="'+localHost+row.File+'">下载</a>&nbsp;&nbsp;'
+        ;
+         return str;
+    }
+
+    function Editor2(value,row,index) {
+        var val=parseInt(value);
+       switch (val){
+           case 0: return '劳工管理'; break;
+           case 1: return '企业管理'; break;
+           case 2: return '项目管理'; break;
+       }
+    }
+
+</script>
+
+</body>
+</html>

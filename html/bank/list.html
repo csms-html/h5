@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑银行</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/btpTable/bootstrap-table.css" rel="stylesheet">
+    <script src="../../js/btpTable/bootstrap-table.js"></script>
+    <script src="../../js/btpTable/bootstrap-table-zh-CN.js "></script>
+    <!--  <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+      <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+      <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>-->
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>银行管理</h5>
+                    <div class="ibox-tools">
+                        <a class="btn btn-info btn-xs" onclick="edit()">新增</a>
+                        <a class="btn btn-info btn-xs">打印</a>
+                    </div>
+                </div>
+                <div class="search" id="search">
+                    <div class="input-group" id="fuzzy" style="display:inline-block">
+                        <select class="form-control" style="width: 150px">
+                            <option value="ProjectName">项目名称 </option>
+                            <!--<option value="ProjectName">项目名称 </option>
+                            <option value="ProjectName">项目名称 </option>-->
+                        </select>
+                        <input type="text" class="form-control" id="fuzzyVal" style="width: 400px">
+
+                        <select class="form-control" id="Status" style="width: 200px">
+                            <option value="3"> 所有到账情况 </option>
+                            <option value="0"> 全额到 </option>
+                            <option value="1"> 部分到 </option>
+                            <option value="2"> 未到账 </option>
+                        </select>
+                        <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger" onclick="init()">搜索</button>
+                       </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                      <table id="table" style="width: 100%;overflow: hidden"></table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        init()
+    });
+    //table
+    function showTable(node, url, method, pyKey, columns,cb) {
+        var obj={
+            url: localHost + url,
+            method: method,
+            ajaxOptions: {
+                xhrFields: { //跨域
+                    withCredentials: true
+                },
+                crossDomain: true
+            },
+            idField: pyKey,
+            striped: true,
+            dataField: "data",
+            pagination: true,
+            queryParams: queryParams,
+            pageNumber: 1,
+            pageSize: 1,
+            sidePagination: "server",
+            responseHandler: responseHandler,
+            columns: columns,
+        };
+        if(cb){
+            obj.onLoadSuccess=cb
+        }
+        $(node).bootstrapTable('destroy').bootstrapTable(obj)
+    }
+    function queryParams(params) {
+        return {
+            PageSize: 1,
+            Page: params.offset / params.limit + 1,
+            Name: $('#fuzzyVal').val(),
+            Status: $('#Status').val(),
+        }
+    }
+    function responseHandler(ret) {
+        if (typeof ret === 'string') ret = JSON.parse(ret);
+        if (ret.code == 0) {
+            if (ret.total) {
+                return {
+                    total: ret.total,
+                    data: ret.bank_data
+                };
+            } else {
+                return {
+                    data: ret.bank_data
+                };
+            }
+        } else {
+            Alert('后台出现错误');
+        }
+    };
+
+
+    function edit(id,ProjectID) {
+        var id=id||0;
+        var ProjectID=ProjectID||0;
+        Open('工资发放',['570px', '350px'],'edit.html?id='+id+'&ProjectID='+ProjectID);
+    }
+
+    
+    function init() {
+        var columns = [
+            {
+                field: 'Name',
+                title: '项目名称',
+                align: 'center',
+            },
+            {
+                field: 'TotalMonth',
+                title: '工期总月数',
+                align: 'center',
+            },
+            {
+                field: 'Date',
+                title: '月份',
+                align: 'center',
+            },
+            {
+                field: 'Price',
+                title: '总造价',
+                align: 'center',
+            },
+            {
+                field: 'WagePercent',
+                title: '农民工工资比例(%)',
+                align: 'center',
+            },
+
+            {
+                field: 'MonthPay',
+                title: '每月发放金额',
+                align: 'center',
+            }, {
+                field: 'Status',
+                title: '状态',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    if (value == 0) {
+                        return '<span>全额到</span>';
+                    } else if (value == 1) {
+                        return '<span class="text-warning">部分到<span>'
+                    } else {
+                        return '<span class="text-danger">未到账<span>'
+                    }
+                }
+            },
+            {
+                field: 'RPay',
+                title: '实际发放情况',
+                align: 'center',
+            },
+
+            {
+                field: 'TotalPay',
+                title: '实际发放总计',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    if (value) {
+                        return  value
+                    }else{
+                        return  0
+                    }
+                }
+            },
+            {
+                title: '保存',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return '<a href ="javascript:void(0)" onclick="edit('+row.ID+','+row.ProjectID+')">编辑</a>'
+                },
+            }
+        ];
+        showTable('#table', '/bank/query', 'get', 'ID', columns,function (data) {
+            var leng=data.data.length;
+            $('#table').bootstrapTable('mergeCells', {index: 0, field: 'Name', rowspan: leng});
+            $('#table').bootstrapTable('mergeCells', {index: 0, field: 'TotalMonth', rowspan: leng});
+            $('#table').bootstrapTable('mergeCells', {index: 0, field: 'Price', rowspan: leng});
+            $('#table').bootstrapTable('mergeCells', {index: 0, field: 'WagePercent', rowspan: leng});
+            $('#table').bootstrapTable('mergeCells', {index: 0, field: 'MonthPay', rowspan: leng});
+            $('#table').bootstrapTable('mergeCells', {index: 0, field: 'TotalPay', rowspan: leng});
+        });
+    }
+    
+    
+
+
+</script>
+</body>
+</html>

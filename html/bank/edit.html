@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑银行账户</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>
+
+
+    <link href="../../js/chosen/chosen.css" rel="stylesheet">
+    <script src="../../js/chosen/chosen.jquery.min.js"></script>
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+    <style>
+        .control-label{
+            text-align: right;
+            line-height: 25px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="row">
+            <div class="col-sm-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"><span class="text-danger">*</span>项目名称：</label>
+                        <div class="col-xs-8">
+                            <select class="form-control" id="ProjectID"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"><span class="text-danger">*</span>工资发放时间：</label>
+                        <div class="col-xs-8">
+                            <input type="text" placeholder="" id="WTime" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"><span class="text-danger">*</span>支付状态：</label>
+                        <div class="col-xs-8">
+                            <select class="form-control" id="Status" >
+                                <option value="0"> 全额到 </option>
+                                <option value="1"> 部分到 </option>
+                                <option value="2"> 未到账 </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"><span class="text-danger">*</span>实际发放金额：</label>
+                        <div class="col-xs-8">
+                            <input type="text" placeholder="" onblur="CheckNumber(this)" id="RPay" class="form-control">
+                        </div>
+                    </div>
+                </form>
+                <div class="text-center submit">
+                    <button type="reset" class="btn btn-w-m btn-default" >清空</button>
+                    <button type="button" class="btn btn-w-m btn-info" onclick="save()">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var BankID=0;
+        var ProjectID=0;
+        $(function() {
+            BankID = parseInt(window.location.href.getQueryString("id")) || 0;
+            ProjectID = parseInt(window.location.href.getQueryString("ProjectID")) || 0;
+            $('#WTime').datetimepicker({
+                language:  'zh-CN',
+                format: 'yyyy-mm',
+                todayBtn: true,
+                todayHighlight: 1,
+                autoclose: true,
+                minView: 2,//最低视图 小时视图
+            });
+            initOrg();
+            if(BankID){
+                init()
+            }
+        });
+        function init() {
+            Ajax('/bank/info','get',{ID:BankID},function (ret) {
+                var list=ret.data;
+                $('#WTime').val(list.year+'-'+list.month).prop('disabled','disabled');
+                $('#Status').val(list.Status);
+                $('#RPay').val(list.RPay);
+            })
+        }
+        function initOrg() {
+            Ajax('/project/allproject','get',{id:0},function (ret) {
+                // SelectBox('ProjectID',ret.list,'ID','Name');
+
+                SelectBox2($('#ProjectID'),ret.list,'ID','Name');
+                $('#ProjectID').chosen();
+
+                if(ProjectID){
+                    $('#ProjectID').val(ProjectID).prop('disabled','disabled');
+                }
+            })
+        }
+        function save() {
+            var formData ={
+                ID:BankID,
+                ProjectID:$('#ProjectID').val(),
+                WTime:$('#WTime').val(),
+                Status:$('#Status').val(),
+                RPay:$('#RPay').val(),
+            };
+
+            //判断长度是否大于20
+            var check_result = CheckLength(formData)
+            if (check_result[0]) {
+                Alert(check_result[1])
+                return;
+            }
+
+            Ajax('/bank/create','post',formData,function (ret) {
+                parent.$('#table').bootstrapTable('refresh');
+                var mylay = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(mylay);
+            })
+        }
+    </script>
+</body>
+</html>

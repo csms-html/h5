@@ -1,0 +1,87 @@
+.text-danger {
+    font-size: 1.3rem;
+    vertical-align: text-top;
+    margin-right: 10px;
+}
+
+.photo {
+    border: 1px solid #ccc;
+    height: 200px;
+    background: #f7f7f7;
+}
+
+.submit {
+    margin-bottom: 30px;
+}
+
+select.form-control {
+    padding-top: 4px;
+}
+
+.search{
+    padding: 15px;
+    border-bottom: 1px solid #cfcfcf;
+}
+.search .search-box{
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid #cfcfcf;
+    margin-right: 0;
+}
+.search div.m-b,.search-box div{
+    display: inline-block;
+    margin-right: 50px;
+}
+.search label {
+    line-height: 30px;
+    margin-bottom: 0;
+}
+
+.search .form-control {
+    display: inline-block;
+}
+
+.search .search-list {
+    display: inline-block;
+}
+.search .search-list .active{
+    background: #ee3939;
+    color: #fff;
+    line-height: 30px;
+    padding:5px  10px;
+}
+
+.search .btn-w-100{
+    min-width: 100px;
+}
+
+
+ul,li{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.cont-list {
+    padding: 0 15px;
+}
+.cont-list li{
+    border-bottom: 1px solid rgb(231, 234, 236);
+}
+
+.cont-list li  .row div{
+    margin: 15px 0;
+}
+
+ .cont-list-tit{
+    font-weight: bold;
+}
+
+ .pagination{
+     padding: 0;
+
+     float: right;
+     margin:20px 30px 20px 0;
+ }
+ [menubtn]{
+     display: none;
+ }

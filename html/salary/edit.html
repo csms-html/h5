@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑银行账户</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <link href="../../js/chosen/chosen.css" rel="stylesheet">
+    <script src="../../js/chosen/chosen.jquery.min.js"></script>
+
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+    <style>
+        .form-group .col-xs-8{
+            line-height: 30px;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="row">
+            <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>薪资计算</h5>
+                    <div class="ibox-tools">
+                        <a href="edit.html" class="btn btn-info btn-xs">新增</a>
+                    </div>
+                </div>
+                <form class="form-horizontal">
+                    <div class="row" style="margin-top: 15px">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label"><span class="text-danger">*</span>项目名称：</label>
+                                <div class="col-xs-8">
+                                    <select class="form-control" id="ProjectID"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label"><span class="text-danger">*</span>劳工姓名：</label>
+                                <div class="col-xs-8">
+                                    <select class="form-control" id="laborid"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label"><span class="text-danger">*</span>发放月数：</label>
+                                <div class="col-xs-8">
+                                    <input type="text" placeholder="" id="Month" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">工种：</label>
+                                <div class="col-xs-8" id="JobType"> </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">合同类型：</label>
+                                <div class="col-xs-8" id="isFeeStand" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">计酬方式：</label>
+                                <div class="col-xs-8" id="type" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">刷卡合计(天)：</label>
+                                <div class="col-xs-8" id="swipe"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">手工合计(天)：</label>
+                                <div class="col-xs-8">
+                                    <input type="text" placeholder="" id="manual" onblur="CheckNumber(this)" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">计酬（日薪）：</label>
+                                <div class="col-xs-8" >
+                                    <input type="text" placeholder="" onblur="CheckNumber(this)" id="unit" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">基本工资：</label>
+                                <div class="col-xs-8" id="basicwage"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">加班工资：</label>
+                                <div class="col-xs-8">
+                                    <input type="text" placeholder="" onblur="CheckNumber(this)" id="overtime" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">计酬小计：</label>
+                                <div class="col-xs-8" id="subtotal"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">奖励金额：</label>
+                                <div class="col-xs-8"  >
+                                    <input type="text" placeholder="" onblur="CheckNumber(this)" id="reward" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">扣款金额：</label>
+                                <div class="col-xs-8"  >
+                                    <input type="text" placeholder="" onblur="CheckNumber(this)" id="deduction" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">总计：</label>
+                                <div class="col-xs-8" id="total" ></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="text-center submit">
+                        <button type="button" class="btn btn-w-m btn-info" onclick="save()">提交</button>
+                    </div>
+                </form>
+            </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        var id=0;
+        var laborid=0;
+        var Month='';
+        var Name='';
+        var year='';
+        var _month='';
+        $(function() {
+            id = parseInt(window.location.href.getQueryString("id")) || 0;
+            laborid = parseInt(window.location.href.getQueryString("laborid")) || 0;
+            Name = window.location.href.getQueryString("Name") || 0;
+            var   year = window.location.href.getQueryString("year")||'';
+            var   _month = window.location.href.getQueryString("month")||'';
+
+            $('#Month').datetimepicker({
+                language:  'zh-CN',
+                format: 'yyyy-mm',
+                todayBtn: true,
+                todayHighlight: 1,
+                autoclose: true,
+                minView: 2,//最低视图 小时视图
+            });
+            if(id>0){
+                Month=year+'-'+_month;
+                $('.ibox-title h5').html(Name+Month+'的薪资计算');
+                init(true);
+            }else{
+                initOrg();
+            }
+        });
+
+        $('#laborid').on('change',function () {
+            getBas()
+        });
+        $('#Month').on('change',function () {
+            getBas()
+        });
+        function getBas() {
+            laborid =$('#laborid').val();
+            Month =$('#Month').val();
+            if(laborid&&Month){
+                init()
+            }
+        }
+
+        function initOrg(){
+            Ajax('/project/allproject','get',{id:0},function (ret) {
+                // SelectBox('ProjectID',ret.list,'ID','Name');
+
+                SelectBox2($('#ProjectID'),ret.list,'ID','Name');
+                $('#ProjectID').chosen();
+
+                setlabor(ret.list[0].ID);
+                function setlabor(projectid) {
+                    Ajax('/labor/one/project','get',{projectid:projectid},function (rets) {
+                        SelectBox('laborid',rets.data,'id','name');
+                    })
+                }
+                $('#ProjectID').change(function () {
+                    var val=$(this).val();
+                    setlabor(val)
+                })
+            });
+        }
+
+        function init(editType) {
+            Ajax('/attend/salary/query','get',{ID:laborid,Month:Month},function (ret) {
+                var list=ret.data[0];
+                if(editType){
+
+                    $('#ProjectID').append('<option value="">'+list.projectname+'</option>').prop('disabled','disabled');
+                    $('#laborid').append('<option value="'+laborid+'">'+Name+'</option>').prop('disabled','disabled');
+                    $('#Month').val(Month).prop('disabled','disabled');
+                }
+                 $('#JobType').html(showJobType(list.JobType));
+                 $('#isFeeStand').html(showFeeStand(list.isFeeStand));
+                 $('#type').html(list.type);
+                 $('#swipe').html(list.swipe||0);
+                 $('#manual').val(list.manual);
+                 $('#unit').val(list.unit);
+                 $('#basicwage').html(list.basicwage);
+                 $('#overtime').val(list.overtime);
+                 $('#subtotal').html(list.subtotal);
+                 $('#reward').val(list.deduction);
+                 $('#deduction').val(list.deduction);
+                 $('#total').html(list.total);
+            })
+        }
+        function showJobType(value) {
+            var data=parseInt(value);
+            switch (data) {
+                case 0:return '钢筋工'; break;
+                case 1:return '架子工'; break;
+                case 2:return '模板工';break;
+                case 3:return '通风工'; break;
+                case 4:return '机械设备安装工'; break;
+                case 5:return ''; break;
+            }
+        }
+        function showFeeStand(value) {
+            var data=parseInt(value);
+            switch (data) {
+                case 0:return '临时工'; break;
+                case 1:return '合同工'; break;
+            }
+        }
+        $('#manual').on('change',function () {
+            computeBsicwage()
+        });
+        $('#unit').on('change',function () {
+            computeBsicwage()
+        });
+        function computeBsicwage() {
+            if($('#swipe').html()){
+                var  swipe=parseInt($('#swipe').html());
+                var  manual=parseInt($('#manual').val());
+                var  unit=parseFloat($('#unit').val());
+                var  Bsicwage=(swipe+manual)*unit;
+                $('#basicwage').html(Bsicwage);
+                computeSubtotal()
+            }else{
+                Alert('请选择月份，劳工，项目');
+            }
+        }
+
+        $('#overtime').on('change',function () {
+            computeSubtotal()
+        });
+        function  computeSubtotal() {
+            var basicwage=parseFloat($('#basicwage').html());
+            var overtime=parseFloat($('#overtime').val());
+            var subtotal=basicwage+overtime;
+            $('#subtotal').html(subtotal);
+            computeTotal();
+        }
+        $('#reward').on('change',function () {
+            computeTotal()
+        });
+        $('#deduction').on('change',function () {
+            computeTotal()
+        });
+        function computeTotal() {
+            var subtotal=parseFloat($('#subtotal').html());
+            var reward=parseFloat($('#reward').val());
+            var deduction=parseFloat($('#deduction').val());
+            var total=subtotal+reward+deduction;
+            $('#total').html(total);
+        }
+
+
+        function save() {
+            var data={
+                id:id,
+                laborid:laborid,
+                time:Month,
+                swipe:parseFloat($('#swipe').html()),
+                manual:parseFloat($('#manual').val()),
+                unit:parseFloat($('#unit').val()),
+                basicwage:parseFloat($('#basicwage').html()),
+                overtime:parseFloat($('#overtime').val()),
+                subtotal:parseFloat($('#subtotal').html()),
+                reward:parseFloat($('#reward').val()),
+                deduction:parseFloat($('#deduction').val()),
+                total:parseFloat($('#total').html()),
+            };
+
+
+            Ajax('/attend/salary/create','post',data,function (ret) {
+                Alert(ret.msg);
+                var time=$('#Month').val();
+                var timeArr=time.split('-');
+                var Name=$('#laborid').text();
+                window.location.href='list.html?id='+laborid+'&Name='+Name+'&year='+timeArr[0]+'&month='+timeArr[1];
+            })
+        }
+    </script>
+</body>
+</html>

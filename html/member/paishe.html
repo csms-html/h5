@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑项目</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+<script language=javascript>
+
+    function Start2(){
+        var str=captrue.bStopPlay();
+        var str = captrue.bStartPlay();
+        var str=captrue.bStopPlay();
+        var str = captrue.bStartPlay2(0);
+        var str = captrue.bSetMode(0);
+    }
+    function Stop()  {
+        var str=captrue.bStopPlay();
+    }
+    function SaveJPG(){
+        var str=captrue.bSaveJPG("C:\\wid\\","head");
+        parent.$('#Avatar_disp').html('上传路径：C:\\wid\\head.jpg');
+        var mylay = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(mylay);
+    }
+</script>
+<body class="gray-bg" >
+<div style="text-align:center;" >
+    <object classid="clsid:454C18E2-8B7D-43C6-8C17-B1825B49D7DE" id="captrue"  width="450" height="420" ></object>
+    <div>
+        <button type="button" class="btn btn-w-100 btn-danger" onclick="Start2()">启动摄像头</button>
+        <button type="button" class="btn btn-w-100 btn-danger" onclick="Stop()">停止</button>
+        <button type="button" class="btn btn-w-100 btn-danger" onclick="SaveJPG()">保存图像</button>
+    </div>
+</div>
+</body>
+</html>

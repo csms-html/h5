@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <style>
+
+    </style>
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5></h5>
+                </div>
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-sm-6">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">企业管理：</label>
+                                <div class="col-sm-8">
+                                    允许显示 <input type="checkbox" id="company_show">
+                                    允许编辑创建 <input type="checkbox" id="company_edit">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">项目管理：</label>
+                                <div class="col-sm-8">
+                                    允许显示 <input type="checkbox" id="project_show">
+                                    允许编辑创建 <input type="checkbox" id="project_edit">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">项目进度：</label>
+                                <div class="col-sm-8">
+                                    允许显示 <input type="checkbox" id="progress_show">
+                                    允许创建 <input type="checkbox" id="progress_edit">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">劳工管理：</label>
+                                <div class="col-sm-8">
+                                    允许显示 <input type="checkbox" id="labor_show">
+                                    允许编辑创建 <input type="checkbox" id="labor_edit">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">考勤管理：</label>
+                                <div class="col-sm-8">
+                                    允许显示 <input type="checkbox" id="attend_show">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">薪资管理：</label>
+                                <div class="col-sm-8">
+                                    允许显示 <input type="checkbox" id="account_show">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">银行分账管理：</label>
+                                <div class="col-sm-8">
+                                    允许显示 <input type="checkbox" id="bank_show">
+                                    允许新建编辑 <input type="checkbox" id="bank_edit">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">保函管理：</label>
+                                <div class="col-sm-8">
+                                    允许显示 <input type="checkbox" id="guarantee_show">
+                                    允许新建编辑 <input type="checkbox" id="guarantee_edit">
+                                    允许下载 <input type="checkbox" id="guarantee_download">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">菜单管理：</label>
+                                <div class="col-sm-8">
+                                    允许修改创建用户 <input type="checkbox" id="permission_user_edit">
+                                    允许配置权限 <input type="checkbox" id="permission_edit">
+                                    允许配置删除 <input type="checkbox" id="permission_delete">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">模板管理：</label>
+                                <div class="col-sm-8">
+                                    允许显示 <input type="checkbox" id="template_show">
+                                    允许新建编辑 <input type="checkbox" id="template_edit">
+                                    允许下载 <input type="checkbox" id="template_download">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">打印管理：</label>
+                                <div class="col-sm-8">
+                                    允许显示 <input type="checkbox" id="print_show">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">帮助中心：</label>
+                                <div class="col-sm-8">
+                                    允许显示 <input type="checkbox" id="help_show">
+                                    允许下载 <input type="checkbox" id="help_download">
+                                </div>
+                            </div>
+                            <div class="text-center submit">
+                                <button type="button" class="btn btn-w-m btn-info" onclick="save()">提交</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var UserID=0;
+    var Name='';
+    $(function() {
+        UserID = parseInt(window.location.href.getQueryString("id")) || 0;
+        Name = window.location.href.getQueryString("Name") || '';
+        if(Name.length>0){
+            $('.ibox-title').html(Name+'-权限配置');
+            init()
+        }
+    });
+    function init() {
+        Ajax('/user/permission/get','get',{ID:UserID},function (ret) {
+            if(!(JSON.stringify(ret.button_show) == "{}")){
+                var button=ret.button_show;
+                for(var i in button){
+                    if(button[i]==1){
+                        $('#'+i).prop('checked','checked')
+                    }
+                }
+            }
+            if(!(JSON.stringify(ret.menu_show) == "{}")){
+                var menu_show=ret.menu_show;
+                for(var i in menu_show){
+                    if(menu_show[i]==1){
+                        $('#'+i).prop('checked','checked')
+                    }
+                }
+            }
+        })
+    }
+
+    function Chek(arr) {
+        var obj={};
+        for(var i=0;i<arr.length;i++){
+            var val=0;
+           $('#'+arr[i]).prop("checked")?val=1:val=0;
+            obj[arr[i]]=val
+        }
+        console.log(obj);
+        return obj;
+    }
+
+    function save() {
+        var data={
+            ID:UserID,
+            Permission:JSON.stringify(Chek(['bank_edit','company_edit',
+                'guarantee_download','guarantee_edit',
+                'help_download','labor_edit','permission_delete',
+                'permission_edit','permission_user_edit',
+                'progress_edit','project_edit',
+                'template_download','template_edit',
+                'account_show','attend_show',
+                'bank_show','company_show',
+                'guarantee_show','help_show',
+                'labor_show','print_show',
+                'progress_show','project_show',
+                'template_show'
+            ]))
+        };
+       Ajax('/user/permission','post',data,function (ret) {
+           Alert('权限配置成功');
+           window.location.href='user.html';
+       })
+    }
+
+</script>
+</body>
+</html>

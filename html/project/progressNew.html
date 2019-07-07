@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-项目进度</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+    <style>
+        .project-people img{
+            width: 100px;
+            height: 100px;
+        }
+
+    </style>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>编辑项目进度</h5>
+                    <div class="ibox-tools">
+                        <a href="../attendance/list.html" class="btn btn-info btn-xs">上传考勤</a>
+                    </div>
+                </div>
+                <form class="form-horizontal">
+                    <div class="row " style="margin-top: 15px">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">是否异常：</label>
+                                <div class="col-sm-8">
+                                    <input type="checkbox" id="Status"> 是
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">日期：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="UploadTime" readonly="readonly" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">进度（%）：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" onblur="CheckNumber(this)" class="form-control" id="Percent">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">工程巡查情况：</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" id="Content"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">监管类型：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="Rtype">
+                                        <option value="0">正常</option>
+                                        <option value="1">常态监管</option>
+                                        <option value="2">重点监管</option>
+                                        <option value="3">严重监管</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">进度款项：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" onblur="CheckNumber(this)" id="PPay">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">农民工支付款项：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" onblur="CheckNumber(this)" id="LPay">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">总产值：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" onblur="CheckNumber(this)" id="Total">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    询问人员：
+                                    <button type="button" class="btn btn-danger" attrId="Person"
+                                            onclick="addPerson('Person')" style="margin-top: -3px;"><i class="fa fa-plus-circle"></i></button>
+                                </label>
+                                <div class="col-sm-8">
+                                    <table class="table table-bordered" style="margin-bottom: 0">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                姓名
+                                            </th>
+                                            <th>
+                                                电话
+                                            </th>
+                                            <th>
+                                                所在班组
+                                            </th>
+                                            <th>
+                                                到场时间
+                                            </th>
+                                            <th>
+                                                工资领取情况
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="Person">
+                                        <tr>
+                                            <td>
+                                                <input type="text" name="name" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="phone" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="class" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="time" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="wage" class="form-control">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span>备注：</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" id="Remark"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">员工是否有签订合同：</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" name="Contract"> <label>无</label>
+                                    <input type="radio" name="Contract"> <label>有</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">此项目是否进行实名制管理：</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" name="RealName"> <label>无</label>
+                                    <input type="radio" name="RealName"> <label>有</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">是否有考勤记录：</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" name="Attend"> <label>无</label>
+                                    <input type="radio" name="Attend"> <label>有</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">是否建立工资专户：</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" name="Wage"> <label>无</label>
+                                    <input type="radio" name="Wage"> <label>有</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">维权公示牌：</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" name="Rights"> <label>无</label>
+                                    <input type="radio" name="Rights"> <label>有</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">农民工工资公示牌：</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" name="Lwages"> <label>无</label>
+                                    <input type="radio" name="Lwages"> <label>有</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">劳务专员任命书：</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" name="LAB"> <label>无</label>
+                                    <input type="radio" name="LAB"> <label>有</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">项目经理任命书：</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" name="PAB"> <label>无</label>
+                                    <input type="radio" name="PAB"> <label>有</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">欠薪预案：</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" name="Arrears"> <label>无</label>
+                                    <input type="radio" name="Arrears"> <label>有</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">农民工工资支付凭证：</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" name="LPayCert"> <label>无</label>
+                                    <input type="radio" name="LPayCert"> <label>有</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">上传进度图片：</label>
+                                <div class="col-sm-8">
+                                    <input type="radio" name="Progress"> <label>无</label>
+                                    <input type="radio" name="Progress"> <label>有</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" id="LgroupTit" style="color: #f8ac59;">进度图片：</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group m-b">
+                                        <div class="input-group-btn">
+                                            <button data-toggle="dropdown"
+                                                    class="btn btn-white dropdown-toggle" type="button" aria-expanded="false">
+                                                分组信息 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" id="Lgroup">
+
+                                            </ul>
+                                        </div>
+                                        <input type="text" class="form-control hidden"  id="GtypeId">
+                                        <input type="text" class="form-control"  id="GtypeName">
+                                        <span class="input-group-btn">
+                                           <span class="input-group-btn">
+                                            <button type="button" class="btn btn-danger" onclick="addgroup(this)">新建</button>
+                                            <button type="button" class="btn" onclick="editgroup(this)">编辑</button>
+                                            <button type="button" class="btn btn-default" onclick="detgroup(this)">删除</button>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-btn">
+                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button" aria-expanded="false">
+                                                图片名称 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" id="Lgroup_child">
+
+                                            </ul>
+                                        </div>
+                                        <input type="text" class="form-control hidden" id="GtypeImgId" >
+                                        <input type="text" class="form-control" id="GtypeImgName">
+                                        <span class="input-group-btn">
+                                             <div class="btn-group">
+                                                <label class="btn btn-danger">
+                                                    <input type="file" accept="*" name="Lgroup_child[]" multiple="multiple"  onchange="uploadImg(this)" class="hide"> 上传
+                                                </label>
+                                            </div>
+                                            <button type="button" class="btn btn-info" onclick="openImg(this)">查看</button>
+                                            <button type="button" class="btn btn-default" onclick="delImg(this)">删除</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="text-center submit">
+                        <button type="reset" class="btn btn-w-m btn-default" >清空</button>
+                        <button type="button" class="btn btn-w-m btn-info" onclick="save()">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var ProjectID= 0;
+    var Name= '';
+    var groupNameVal='';
+    var ImgGroupID=[];
+    var pYear=0;
+    var pMonth=0;
+    var monthId=0;
+    $(function () {
+        ProjectID = parseInt(window.location.href.getQueryString("id"));
+        Name = window.location.href.getQueryString("Name");
+        pYear =window.location.href.getQueryString("year");
+        pMonth = window.location.href.getQueryString("month");
+        monthId = window.location.href.getQueryString("monthId");
+        if (Name&&ProjectID) {
+            $('.ibox-title h5').html(Name+'进度添加');
+            $('#UploadTime').val(pYear+'-'+pMonth);
+
+        }
+
+        $('input[name="time"]').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+
+         init();
+
+
+    });
+    function  init() {
+        if(!monthId){
+            return
+        }
+        Ajax('/project/progress/query','get',{ProgressID:monthId},function (ret) {
+            var list=ret.progress_info;
+            list.Status==1?$('#Status').prop('checked',true):$('#Status').prop('checked',false);
+           $('#Rtype').val(list.RType);
+           $('#Percent').val(list.Percent);
+           $('#Content').val(list.Content);
+           $('#PPay').val(list.PPay);
+           $('#LPay').val(list.LPay);
+           $('#Total').val(list.Total);
+           $('#Remark').val(list.Remark);
+
+            (function addPerson2(data) {
+                if(data){
+                    for(var i=0;i<data.length;i++){
+                        if(data[i].name){
+                            var str='<tr><td><input type="text" name="name" class="form-control" value="'+data[i].name+'"></td>'+
+                                '<td><input type="text" name="phone" class="form-control" value="'+data[i].phone+'"></td>'+
+                                '<td><input type="text" name="class" class="form-control" value="'+data[i].class+'"></td>'+
+                                '<td><input type="text" name="time" class="form-control" value="'+data[i].time+'"></td>'+
+                                '<td><input type="text" name="wage" class="form-control" value="'+data[i].wage+'"></td></tr>';
+                            $('#Person').prepend(str);
+                        }
+
+                    }
+                }
+
+                $('input[name="time"]').datetimepicker({
+                    language:  'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    todayBtn: true,
+                    todayHighlight: 1,
+                    autoclose: true,
+                    minView: 2,//最低视图 小时视图
+                    maxView: 4, //最高视图 十年视图
+                });
+            })(list.Person);
+
+           list.Contract==1?$('input[name="Contract"]:last').prop('checked',true):$('input[name="Contract"]:first').prop('checked',false);
+           list.RealName==1?$('input[name="RealName"]:last').prop('checked',true):$('input[name="RealName"]:first').prop('checked',false);
+           list.Attend==1?$('input[name="Attend"]:last').prop('checked',true):$('input[name="Attend"]:first').prop('checked',false);
+           list.Wage==1?$('input[name="Wage"]:last').prop('checked',true):$('input[name="Wage"]:first').prop('checked',false);
+           list.Lwage==1?$('input[name="Lwages"]:last').prop('checked',true):$('input[name="Lwages"]:first').prop('checked',false);
+           list.Rights==1?$('input[name="Rights"]:last').prop('checked',true):$('input[name="Rights"]:first').prop('checked',false);
+           list.LAB==1?$('input[name="LAB"]:last').prop('checked',true):$('input[name="LAB"]:first').prop('checked',false);
+           list.PAB==1?$('input[name="PAB"]:last').prop('checked',true):$('input[name="PAB"]:first').prop('checked',false);
+           list.Arrears==1?$('input[name="Arrears"]:last').prop('checked',true):$('input[name="Arrears"]:first').prop('checked',false);
+           list.LPayCert==1?$('input[name="LPayCert"]:last').prop('checked',true):$('input[name="LPayCert"]:first').prop('checked',false);
+           list.Progress==1?$('input[name="Progress"]:last').prop('checked',true):$('input[name="Progress"]:first').prop('checked',false);
+        })
+    }
+
+    //点击添加人员
+    function addPerson(id) {
+        var addPhone=$('#'+id);
+        var name=$('input[name="name"]').first();
+        var phone=$('input[name="phone"]').first();
+        var _class=$('input[name="class"]').first();
+        var time=$('input[name="time"]').first();
+        var wage=$('input[name="wage"]').first();
+
+        if(name.val()&&phone.val()&&_class.val()&&time.val()&&wage.val){
+            var str='<tr><td><input type="text" name="name" class="form-control"></td>'+
+                    '<td><input type="text" name="phone" class="form-control"></td>'+
+                    '<td><input type="text" name="class" class="form-control"></td>'+
+                    '<td><input type="text" name="time" class="form-control"></td>'+
+                    '<td><input type="text" name="wage" class="form-control"></td></tr>';
+            addPhone.prepend(str)
+        }else{
+            Alert('请先填写完联系方式！！')
+        }
+        $('input[name="time"]').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+    }
+
+    //点击单选添加分组事件
+    $('input[type="radio"]').click(function(){
+        var name=$(this).attr('name');
+        var type=$(this).prop('checked');
+        var label=$(this).next('label').text();
+        var parentName=$(this).parent().prev().html();
+
+
+        $('#GtypeId').val('');
+        $('#GtypeName').val('');
+        $('#GtypeImgId').val('');
+        $('#GtypeImgName').val('');
+        $('#Lgroup').html('').attr('groupNameVal','');
+        $('#Lgroup_child').html('');
+        $('#LgroupTit').html(parentName);
+
+        if(type&&label=='有'){
+            Ajax('/project/group/list','get',{ID:ProjectID},function (ret) {
+                var  groupNameVal=name+'_list';
+                var  Lgroup= $('#Lgroup');
+                Lgroup.attr('groupNameVal',groupNameVal);
+                Lgroup.html(SetGroup(ret.group[groupNameVal]));
+            })
+        }
+        initgroup();
+    });
+
+    //点击分组修改图片信息
+    function initgroup(){
+        $('.input-group').on('click','li a', function () {
+            var id= $(this).attr('attrId');
+            var parid=$(this).parents('ul').attr('id');
+            if(parid=='Lgroup'){
+                Ajax('/company/pic/list','get',{ID: id}, function (ret) {
+                    $('#'+parid+'_child').html(SetGroup(ret.pic_list));
+                });
+            }
+            $(this).parents('.input-group-btn').siblings('input').eq(0).val(id);
+            $(this).parents('.input-group-btn').siblings('input').eq(1).val($(this).text())
+        });
+    }
+
+    //返回分组类型Id
+    function groupId() {
+        var groupNameVal=$('#Lgroup').attr('groupNameVal');
+        if(!groupNameVal){
+            alert('请选择上传进度图片类型！！！');
+            return
+        }
+        switch (groupNameVal){
+            case 'project': return 0;break;
+            case 'Progress_list': return 1;break;
+            case 'Contract_list': return 2;break;
+            case 'RealName_list': return 3;break;
+            case 'Attend_list': return 4;break;
+            case 'Wage_list': return 5;break;
+            case 'Rights_list': return 6;break;
+            case 'Lwages_list': return 7;break;
+            case 'LAB_list': return 8;break;
+            case 'PAB_list': return 9;break;
+            case 'Arrears_list': return 10;break;
+            case 'LPayCert_list': return 11;break;
+        }
+    }
+
+    //分组信息
+    function addgroup(_this) {
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.find('#GtypeId');
+        var GtypeName=oParents.find('#GtypeName');
+        if(!GtypeName.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+        var Gtype=groupId();
+
+        var data={
+            Gtype:Gtype,
+            Name:GtypeName.val(),
+            CID:ProjectID
+        };
+        Ajax('/project/group/create','post',data,function (ret) {
+            Alert('新建分组成功！！');
+            dropdown.append('<li><a href="javascript:void(0)" attrId='+ret.id+'>'+ret.name+'</a></li>');
+            GtypeId.val(ret.id);
+            GtypeName.val(ret.name);
+            initgroup()
+        })
+    }
+    function editgroup(_this) {
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.find('#GtypeId');
+        var GtypeName=oParents.find('#GtypeName');
+        if(!GtypeName.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+        var data={
+            ID:GtypeId.val(),
+            Name:GtypeName.val(),
+        };
+        Ajax('/company/group/edit','post',data,function (ret) {
+            Alert('编辑建分组成功！！');
+            dropdown.find('a[attrId="'+GtypeId.val()+'"]').html(GtypeName.val());
+        })
+    }
+    function detgroup(_this) {
+        Confirm("确定删除分组？",
+            function () {
+                var oParents=$(_this).parents('.input-group');
+                var dropdown=oParents.find('.dropdown-menu');
+                var GtypeId=oParents.find('#GtypeId');
+                var GtypeName=oParents.find('#GtypeName');
+                var ulnode = $(_this).parents('[class="input-group m-b"]').next().find('ul')
+                if(!GtypeName.val()){
+                    Alert('请选择分组信息！!');
+                    return;
+                }
+                var data={
+                    ID:GtypeId.val()
+                };
+                Ajax('/company/deletepicgroup','delete',data,function (ret) {
+                    dropdown.find('a[attrId="'+GtypeId.val()+'"]').parent().empty();
+                    GtypeId.val('');
+                    GtypeName.val('');
+                    ulnode.empty()
+                    Alert('删除分组成功！！');
+                    window.top.close(LayerConfirm)
+                })
+            },function () {})
+    }
+
+    //分组图片
+    function uploadImg(_this){
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.prev().find('#GtypeId');
+        var GtypeImgId=oParents.find('#GtypeImgId');
+        var GtypeImgName=oParents.find('#GtypeImgName');
+
+        if(!GtypeId.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+
+        var formData=getFormData(_this);
+        formData.append('ID',GtypeId.val());
+        formData.append('ProgressID',0);
+        formData.append('IsCreate',0);
+
+        Ajax('/project/img/upload','post',formData,function (ret) {
+            Alert('上传图片成功！！');
+            for(var i=0;i<ret.data.length;i++){
+                dropdown.append('<li><a attrId='+ret.data[i].id+'>'+ret.data[i].name+'</a></li>');
+                ImgGroupID.push(ret.data[i].id);
+            }
+            initgroup();
+        },function(){},true)
+    }
+    function openImg(_this) {
+        var oParents=$(_this).parents('.input-group');
+        var GtypeImgId=oParents.find('#GtypeImgId');
+        Ajax('/company/pic/getone','get',{ID:GtypeImgId.val()},function (ret) {
+            Open('','',localHost+ret.url)
+        })
+    }
+    function delImg(_this){
+        Confirm("确定删除图片？",function(){
+            var oParents=$(_this).parents('.input-group');
+            var dropdown=oParents.find('.dropdown-menu');
+            var GtypeImgId=oParents.find('#GtypeImgId');
+            var GtypeImgName=oParents.find('#GtypeImgName');
+            if(!GtypeImgId.val()){
+                Alert('请选择图片信息！!');
+                return;
+            }
+            Ajax('/company/deletepic','delete',{ID:GtypeImgId.val()},function (ret) {
+                dropdown.find('a[attrId="'+GtypeImgId.val()+'"]').parent().empty();
+                GtypeImgId.val('');
+                GtypeImgName.val('');
+                Alert('图片删除成功！！');
+                window.top.close(LayerConfirm)
+            })
+        },function(){})
+    }
+
+    function getPerson(){
+        var arr=[];
+        $('#Person input[name="name"]').each(function (n,ele) {
+            arr.push({
+                name:$(ele).val(),
+                phone:$('#Person input[name="phone"]').eq(n).val(),
+                'class':$('#Person input[name="class"]').eq(n).val(),
+                time:$('#Person input[name="time"]').eq(n).val(),
+                wage:$('#Person input[name="wage"]').eq(n).val(),
+            })
+        });
+        return arr;
+    }
+    function save() {
+        var data={
+            ProjectID:ProjectID,
+            Status:$('#Status').prop('checked'),
+            UploadTime:$('#UploadTime').val(),
+            Remark:$('#Remark').val(),
+            Rtype:$('#Rtype').val(),
+            Percent:parseInt($('#Percent').val()),
+            Content:$('#Content').val(),
+            PPay:$('#PPay').val(),
+            LPay:$('#LPay').val(),
+            Total:$('#Total').val(),
+            Person:JSON.stringify(getPerson()),
+            Contract:$('input[name="Contract"]:last').prop('checked'),
+            RealName:$('input[name="RealName"]:last').prop('checked'),
+            Attend:$('input[name="Attend"]:last').prop('checked'),
+            Wage:$('input[name="Wage"]:last').prop('checked'),
+            Lwage:$('input[name="Lwages"]:last').prop('checked'),
+            Rights:$('input[name="Rights"]:last').prop('checked'),
+            LAB:$('input[name="LAB"]:last').prop('checked'),
+            PAB:$('input[name="PAB"]:last').prop('checked'),
+            Arrears:$('input[name="Arrears"]:last').prop('checked'),
+            LPayCert:$('input[name="LPayCert"]:last').prop('checked'),
+            Progress:$('input[name="Progress"]:last').prop('checked'),
+            ImgGroupID:JSON.stringify(ImgGroupID)
+        };
+
+        //判断长度是否大于20
+        var check_result = CheckLength(data)
+        if (check_result[0]) {
+            Alert(check_result[1])
+            return;
+        }
+
+        if(monthId){
+            data.ID=monthId;
+            Ajax('/project/progress/update','post',data,function (ret) {
+                Alert('上传成功');
+                window.location.href='view.html?id='+ProjectID+'&Name='+Name;
+            })
+        }else{
+            Ajax('/project/progress/create','post',data,function (ret) {
+                Alert('上传成功');
+                window.location.href='view.html?id='+ProjectID+'&Name='+Name;
+            })
+        }
+
+    }
+</script>
+</body>
+</html>

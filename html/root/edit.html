@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+    <style>
+        .control-label{
+            text-align: right;
+            line-height: 25px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="row">
+            <div class="col-sm-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"><span class="text-danger">*</span>用户名：</label>
+                        <div class="col-xs-8">
+                            <input type="text" placeholder="" id="UserName" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"><span class="text-danger">*</span>密码：</label>
+                        <div class="col-xs-8">
+                            <input type="password" placeholder="" id="Password" class="form-control">
+                        </div>
+                    </div>
+                  <!--  <div class="form-group">
+                        <label class="col-xs-3 control-label"><span class="text-danger">*</span>所属公司：</label>
+                        <div class="col-xs-8">
+                            <select class="form-control" id="CompanyID"></select>
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"><span class="text-danger">*</span>所属地区：</label>
+                        <div class="col-xs-8">
+                            <select class="form-control" id="province" style="display: inline-block;width: 30%;vertical-align: middle"></select>
+                            <select class="form-control" id="city" style="display: inline-block;width: 30%;vertical-align: middle"></select>
+                            <select class="form-control" id="district" style="display: inline-block;width: 30%;vertical-align: middle"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">备注：</label>
+                        <div class="col-xs-8">
+                            <textarea placeholder=""  wrap="vitual" id="remark" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </form>
+                <div class="text-center submit">
+                    <button type="button" class="btn btn-w-m btn-default" onclick="clearVal()">清空</button>
+                    <button type="button" class="btn btn-w-m btn-info" onclick="save()">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var UserID=0;
+        var Name='';
+        $(function() {
+            UserID = parseInt(window.location.href.getQueryString("id")) || 0;
+            Name = window.location.href.getQueryString("Name") || '';
+
+            SelcetArea();
+            if(UserID){
+                setTimeout(init,1000)
+            }
+        });
+        function init() {
+            Ajax('/user/query','get',{ID:UserID},function (ret) {
+                var list=ret.user_list[0];
+                $('#UserName').val(list.UserName);
+                $('#province').val(list.PID);
+                $('#city').append('<option value="'+list.CID+'">'+list.CName+'</option>');
+                $('#district').append('<option value="'+list.DID+'">'+list.DName+'</option>');
+                $('#remark').val(list.Description);
+            })
+        }
+
+        function save() {
+            var sss=getArea();
+            console.log(sss);
+
+            if($('#UserName').val().length<=0){
+                Alert('必须填写用户名字！');
+                return
+            }
+            else if(UserID<=0&&$('#Password').val().length<=0){
+                Alert('必须填写用户密码！');
+            }
+            var formData = new FormData();
+            formData.append('UserName',$('#UserName').val());
+            formData.append('Password',$('#Password').val());
+         /*   formData.append('CompanyID',$('#CompanyID').val());*/
+            formData.append('AreaID',getArea());
+            formData.append('Description',$('#remark').val());
+            if(UserID){
+                formData.append('ID',UserID);
+                Ajax('/user/update','post',formData,function (ret) {
+                    parent.$('#table').bootstrapTable('refresh');
+                    var mylay = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(mylay);
+                    Alert('创建用户成功！！');
+                },function () {},true)
+            }
+
+            //判断长度是否大于20
+            var check_result = CheckLength(formData)
+            if (check_result[0]) {
+                Alert(check_result[1])
+                return;
+            }
+
+            Ajax('/user/regist','post',formData,function (ret) {
+                parent.$('#table').bootstrapTable('refresh');
+                var mylay = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(mylay);
+                Alert('创建用户成功！！');
+            },function (){},true)
+        }
+    </script>
+</body>
+</html>

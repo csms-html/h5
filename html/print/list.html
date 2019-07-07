@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+
+
+    <link href="../../js/plugins/layer/skin/moon/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>打印管理</h5>
+                    <div class="ibox-tools">
+                        <a class="btn btn-info btn-xs">打印</a>
+                    </div>
+                </div>
+                <div class="search" id="search">
+
+                    <div class="m-b"><label>企业名称: </label><input type="text" class="form-control" style="width: 200px">
+                    </div>
+                    <div class="m-b"><label>项目名称: </label><input type="text" class="form-control" style="width: 200px">
+                    </div>
+                    <div class="m-b"><label>劳工名称: </label><input type="text" class="form-control" style="width: 200px">
+                    </div>
+                    <div class="m-b"><label>项目考勤: </label><input type="text" class="form-control" style="width: 200px">
+                    </div>
+                    <div class="m-b"><label>薪资计算: </label><input type="text" class="form-control" style="width: 200px">
+                    </div>
+                    <button type="button" class="btn btn-danger">搜索</button>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table data-toggle="table" data-url="js/demo/bootstrap_table_test2.json" data-card-view="true"
+                           data-mobile-responsive="true" class="table table-hover table-bordered table-center"
+                           style="margin: 0px;">
+                        <thead style="display: table-header-group;">
+                        <tr>
+                            <th style="" data-field="name" tabindex="0">
+                                <div class="th-inner ">月份</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                            <th style="" data-field="name" tabindex="0">
+                                <div class="th-inner ">项目</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                            <th style="" data-field="name" tabindex="0">
+                                <div class="th-inner ">到账情况</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                            <th style="" data-field="star" tabindex="0">
+                                <div class="th-inner ">项目比例</div>
+                                <div class="fht-cell"></div>
+                            </th>
+
+                            <th style="" data-field="description" tabindex="0">
+                                <div class="th-inner ">该月缺少额度</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                            <th style="" data-field="description" tabindex="0">
+                                <div class="th-inner ">总计缺少额度</div>
+                                <div class="fht-cell"></div>
+                            </th>
+
+                            <th style="" data-field="description" tabindex="0">
+                                <div class="th-inner ">总计</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="no-records-found">
+                            <td>2019-3</td>
+                            <td><a href="">项目1</a></td>
+                            <td><a href="" class="text-danger">未到账</a></td>
+                            <td>20%</td>
+                            <td>
+                                12324124
+                            </td>
+                            <td>
+                                21314214
+                            </td>
+                            <td rowspan="2">431232131</td>
+                        </tr>
+                        <tr class="no-records-found">
+                            <td>2019-3</td>
+                            <td><a href="">项目1</a></td>
+                            <td><a href="" class="text-danger">未到账</a></td>
+                            <td>20%</td>
+                            <td>
+                                12324124
+                            </td>
+                            <td>
+                                21314214
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <ul class="pagination">
+                    <li class="paginate_button previous disabled" aria-controls="DataTables_Table_0"
+                        tabindex="0" id="DataTables_Table_0_previous"><a href="#">上一页</a></li>
+                    <li class="paginate_button active" aria-controls="DataTables_Table_0" tabindex="0"><a
+                            href="#">1</a></li>
+                    <li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a
+                            href="#">2</a></li>
+                    <li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a
+                            href="#">3</a></li>
+                    <li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a
+                            href="#">4</a></li>
+                    <li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a
+                            href="#">5</a></li>
+                    <li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a
+                            href="#">6</a></li>
+                    <li class="paginate_button next" aria-controls="DataTables_Table_0" tabindex="0"
+                        id="DataTables_Table_0_next"><a href="#">下一页</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
