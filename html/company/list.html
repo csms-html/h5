@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+
+    <link href="../../js/page/myPagination.css" rel="stylesheet">
+    <script src="../../js/page/myPagination.js"></script>
+
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>查看企业</h5>
+                    <div class="ibox-tools">
+                        <a href="projects.html"  class="btn btn-info btn-xs">导入模板</a>
+                        <a href="projects.html"  class="btn btn-info btn-xs">创建企业</a>
+                    </div>
+                </div>
+                <div class="search" id="search">
+                    <div class="input-group" style="display:inline-block">
+                        <select class="form-control" style="width: 150px" id="fuzzy">
+                                <option value="0">企业名称 </option>
+                                <option value="1">企业负责人 </option>
+                         </select>
+                        <input type="text" class="form-control" id="fuzzyVal" style="width: 400px">
+                        <select  class="form-control" id="province" style="width: 150px"></select>
+                        <select  class="form-control" id="city" style="width: 150px"></select>
+                        <select  class="form-control" id="district" style="width: 150px"></select>
+                        <select  class="form-control" id="HasBadRecord" style="width: 150px">
+                            <option value="0">全部</option>
+                            <option value="2">有不良信息</option>
+                            <option value="1">无不良记录</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger"  onclick="search()">搜索</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="cont-list">
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="pagination" class="pagination"></div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var CompanyId=0;
+    $(function () {
+        HasBadRecord=parseInt(window.location.href.getQueryString("HasBadRecord"))||0;
+        if(HasBadRecord){
+            $('#HasBadRecord').hide();
+            $('.ibox-title h5').html('不良企业');
+        }
+        SelcetArea();
+
+        var data={
+            Type:0,
+            Name:'',
+            PID:0,
+            CID:0,
+            DID:0,
+            HasBadRecord:HasBadRecord,
+            Page:Page,
+            PageSize:PageSize,
+        };
+        init(data);
+    });
+    function search() {
+        var data={
+            Type:parseInt($('#fuzzy').val()),
+            Name:$('#fuzzyVal').val(),
+            PID:parseInt($('#province').val())||0,
+            CID:parseInt($('#city').val())||0,
+            DID:parseInt($('#district').val())||0,
+            HasBadRecord:parseInt($('#HasBadRecord').val())||HasBadRecord,
+            Page:Page,
+            PageSize:PageSize,
+        };
+        init(data)
+    }
+
+    //通过表格
+    function init(data) {
+        Ajax('/company/list','GET',data,function (ret) {
+            var str='';
+            var company=ret.company_list;
+            for(var i=0;i<company.length;i++){
+                str+='<li><div class="row">' +
+                    '<div class="col-sm-4">' +
+                    '<div><span class="cont-list-tit">企业名称:</span>'+
+                    '<a href="view.html?CompanyId='+company[i].ID+'&Name='+company[i].Name+'">'+company[i].Name+'</a></div>'+
+                    '<div><span class="cont-list-tit">企业负责人:</span>'+
+                    '<span href="">'+company[i].Legal+'</span></div>'+
+                    '<div><span class="cont-list-tit">所属地区:</span>'+
+                    '<span>'+company[i].ProName+company[i].CityName+company[i].DisName+'</span></div>'+
+                    '</div>'+
+                    '<div class="col-sm-4">'+
+                    '<div><span class="cont-list-tit">联系方式:</span>'+
+                    '<span>'+showContact(company[i].Phone)+'</span></div>'+
+                    '<div><span class="cont-list-tit">办公地址:</span>'+
+                    '<span>'+company[i].Address+'</span></div>'+
+                    '<div><span class="cont-list-tit">企业类型:</span>'+
+                    '<span>'+showType(company[i].Type)+'</span></div>'+
+                    '</div>'+
+                    '<div class="col-sm-4">'+
+                    '<div><span class="cont-list-tit">企业状态:</span>'+showHasBadRecord(company[i].HasBadRecord)+'</div>'+
+                    '<div><span class="cont-list-tit">备注:</span>'+
+                    '<span>'+company[i].Description+'</span></div>'+
+                    '</div>'+
+                    '</div></li>'
+            }
+            if(!str){
+                $('.cont-list').html('<li class="text-center" style="font-size: 24px;margin: 20px">暂无数据</li>')
+            }else{
+                $('.cont-list').html(str);
+            }
+            myPage(ret.total);
+        })
+    }
+    function showHasBadRecord(data) {
+        switch (data){
+            case 1:return '<span>正常</span>';break;
+            case 2:return '<span class="text-danger">风险</span>';break;
+            case 3:return '<span class="text-danger">黑名单</span>';break;
+        }
+    }
+    function showType(data) {
+        switch (data){
+            case 0:return '施工企业';break;
+            case 1:return '监理单位';break;
+            case 2:return '勘察设计';break;
+            case 3:return '劳务公司';break;
+            case 4:return '房地产开发';break;
+            case 5:return '政府及事业单位';break;
+            case 6:return '其他业主单位';break;
+            case 7:return '其他';break;
+        }
+    }
+    function showContact(data) {
+        var Phone='';
+        for (var i=0;i<data.length;i++){
+            Phone+=data[i].name+'&nbsp;'+data[i].phone+'&nbsp;'+data[i].post+'<br/>'
+        }
+        return Phone;
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/btpTable/bootstrap-table.css" rel="stylesheet">
+    <script src="../../js/btpTable/bootstrap-table.js"></script>
+    <script src="../../js/btpTable/bootstrap-table-zh-CN.js "></script>
+  <!--  <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>-->
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>查看用户</h5>
+                    <div class="ibox-tools">
+                        <a class="btn btn-info btn-xs" href="javascript:void(0)" onclick="editUser()">创建用户</a>
+                    </div>
+                </div>
+                <div class="search" id="search">
+                    <div class="input-group" style="display:inline-block">
+                        <select class="form-control" id="fuzzy" style="width: 150px">
+                            <option value="CompnayName">企业名称 </option>
+                            <option value="UserName">用户名</option>
+                        </select>
+                        <input type="text" class="form-control"  id="fuzzyVal" style="width: 400px">
+                        <select  class="form-control" id="province" style="width: 150px"> </select>
+                        <select  class="form-control" id="city" style="width: 150px"></select>
+                        <select  class="form-control" id="district" style="width: 150px"> </select>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" onclick="init()">搜索</button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="table">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        SelcetArea();
+        init()
+    });
+    function fuzzyVal() {
+        var obj = {};
+        var fuzzyVal = $('#fuzzy').val();
+        obj[fuzzyVal] = $('#fuzzyVal').val();
+        return obj;
+    }
+    function queryParams(params) {
+        return $.extend(fuzzyVal(),{
+            PageSize: params.limit,
+            Page: params.offset / params.limit + 1,
+            AreaId: getArea(),
+        })
+    }
+    function responseHandler(ret) {
+        if (typeof ret === 'string') ret = JSON.parse(ret);
+        if (ret.code == 0) {
+            if (ret.total) {
+                return {
+                    total: ret.total,
+                    data: ret.user_list
+                };
+            } else {
+                return {
+                    data: ret.user_list
+                };
+            }
+        } else {
+            Alert('后台出现错误');
+        }
+    };
+    function init() {
+        var columns = [
+            {
+                field: 'LoginName',
+                title: '用户名',
+                align: 'center',
+            },
+            {
+                field: 'AreaName',
+                title: '地区',
+                align: 'center',
+            },
+            {
+                field: 'Description',
+                title: '备注',
+                align: 'center',
+            },
+            {
+                title: '操作',
+                align: 'center',
+                formatter: 'Editor',
+            }
+        ];
+        showTable('#table', '/user/query', 'get', 'ID', columns);
+    }
+
+    function editUser(id,name) {
+        var id=id||0;
+        var name=name||'新建用户';
+        Open(name,['650px', '450px'],'edit.html?id='+id+'&Name='+name);
+    }
+
+    function deleteSelf(id) {
+        Confirm('确定删除该用户？', function (index) {
+            Ajax('/user/delete','delete',{ID:id},function (ret) {
+                init();
+                window.top.layer.close(LayerConfirm);
+            })
+        })
+    }
+
+    function downSelf(id) {
+        Confirm('确定停用该用户？', function (index) {
+            Ajax('/user/down','get',{ID:id},function (ret) {
+                init();
+                window.top.layer.close(LayerConfirm);
+            })
+        })
+    }
+
+
+    function Editor(value,row,index) {
+        var str='<a href="javascript:void(0)" onclick="downSelf('+row.ID+')">停用</a>&nbsp;&nbsp;'+
+            '<a href="javascript:void(0)" onclick="editUser('+row.ID+',\''+row.UserName+'\')" >编辑</a>&nbsp;&nbsp;'+
+            '<a href="javascript:void(0)" onclick="deleteSelf('+row.ID+')">删除</a>&nbsp;&nbsp;'+
+            '<a href="root.html?id='+row.ID+'&Name='+row.UserName+'" >菜单管理</a>&nbsp;&nbsp;';
+        return str;
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+    <style>
+        .form-group div{
+            line-height: 30px;
+        }
+        .dropdown-menu li{
+            position: relative;
+        }
+    </style>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/btpTable/bootstrap-table.css" rel="stylesheet">
+    <script src="../../js/btpTable/bootstrap-table.js"></script>
+    <script src="../../js/btpTable/bootstrap-table-zh-CN.js "></script>
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5></h5>
+                    <div class="ibox-tools">
+                        <a href="projects.html" class="btn btn-info btn-xs">编辑</a>
+                        <a href="projects.html" class="btn btn-info btn-xs">打印</a>
+                    </div>
+                </div>
+                <form class="form-horizontal">
+                    <div class="row " style="margin-top: 15px">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">企业名称：</label>
+                                <div class="col-sm-8">
+                                    <span id="Name"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">企业负责人：</label>
+                                <div class="col-sm-8">
+                                    <span id="Legal"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">企业类型：</label>
+                                <div class="col-sm-8" id="Type"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">企业资质：</label>
+                                <div class="col-sm-8">
+                                    <img id="License" src="" style="width: 200px;height: auto" alt="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">所属地区：</label>
+                                <div class="col-sm-8" id="areaId"></div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">办公地址：</label>
+                                <div class="col-sm-8" id="Address"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">联系方式：</label>
+                                <div class="col-sm-8" id="Phone"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">公司执照：</label>
+                                <div class="col-sm-2">
+                                    <div class="dropdown">
+                                        <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">分组选项<span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" id="Lgroup">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="dropdown">
+                                        <button class="btn btn-info dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">照片选项<span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu"  id="Lgroup_child">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">公司照片：</label>
+                                <div class="col-sm-2">
+                                    <div class="dropdown">
+                                        <button class="btn btn-info dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">分组选项 <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" id="group">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="dropdown">
+                                        <button class="btn btn-info dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">照片选项<span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" id="group_child">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">不良类型：</label>
+                                <div class="col-sm-8">
+                                    <span id="HasBadRecord"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">不良链接：</label>
+                                <div class="col-sm-8">
+                                    <span id="BadRecordUrl"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">其他文件：</label>
+                                <div class="col-sm-8">
+                                    <span id="otherfile_disp"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">备注：</label>
+                                <div class="col-sm-8" id="Description"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="ibox">
+                <div class="search" style="border-bottom: none">
+                    <div class="input-group" style="display:inline-block">
+                        <select class="form-control" id="fuzzy" style="width: 150px">
+                            <option value="projectname">项目名称 </option>
+                        </select>
+                        <input type="text" class="form-control" id="fuzzyVal" style="width: 400px">
+                        <select  class="form-control" id="status" style="width: 150px">
+                            <option value="4">全部</option>
+                            <option value="0">正常</option>
+                            <option value="1">常态监管</option>
+                            <option value="2">重点</option>
+                            <option value="3">严重</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger btn-w-100" onclick="init2()">搜索</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var CompanyId=0;
+    var Name='';
+    $(function () {
+        CompanyId=window.location.href.getQueryString("CompanyId");
+        Name=window.location.href.getQueryString("Name");
+        if(Name){
+            $('.ibox-title h5').html(Name);
+            $('.ibox-tools a').attr('href','edit.html?CompanyId='+CompanyId+'&Name='+Name)
+        }
+        init();
+        initgroup2();
+        init2();
+    });
+
+
+
+    //添加图片分组性息
+    function initgroup2() {
+        Ajax('/company/getpicgroup','get',{CID:CompanyId}, function (ret) {
+            $('#Lgroup').html(SetShowGroup(ret.Lgroup_list));
+            $('#group').html(SetShowGroup(ret.group_list));
+            initgroup()
+        });
+    }
+
+    //点击分组修改图片信息
+    function initgroup(){
+        $('.dropdown').on('click','li a', function () {
+            var id= $(this).attr('attrId');
+            var parid=$(this).parents('ul').attr('id');
+            if(parid==='Lgroup'||parid==='group'){
+                Ajax('/company/pic/list','get',{ID: id}, function (ret) {
+                    $('#'+parid+'_child').html(SetShowGroup(ret.pic_list));
+                });
+            }else{
+                var Purl=$(this).attr('Purl');
+                Open('','',localHost+Purl)
+            }
+        });
+    }
+
+    //通过表格
+    function init() {
+        Ajax('/company/info','GET',{ID:CompanyId},function (ret) {
+            var company=ret.company_info;
+            $('#Name').html(company.Name);
+            $('#Legal').html(company.Legal);
+            $('#Type').html(showType(company.Type));
+            $('#License').attr('src',localHost+company.License);
+            $('#areaId').html(company.ProvinceID+company.CityID+company.DistrictID);
+            $('#Address').html(company.Address);
+            $('#Phone').html(showContact(company.Phone));
+            $('#HasBadRecord').html(showHasBadRecord(company.HasBadRecord));
+            $('#BadRecordUrl').html(company.BadRecordUrl);
+            for(var i=0;i<company.other_file_list.length;i++){
+                var other_file=company.other_file_list[i];
+                $('#otherfile_disp').append(
+                    '<span id="ot'+other_file.id+'"><a  href="'+localHost+other_file.filepath+'" style="margin-right: 10px" download="'+other_file.filename+'">'+other_file.filename+'</a>'
+            );
+            }
+            $('#other_disp').html(company.BadRecordUrl);
+            $('#Description').html(company.Description);
+        })
+    }
+    function deleteOhter(id) {
+        Ajax('/company/remove/otherfile','delete',{id:id},function (ret) {
+            $('#ot'+id).remove();
+        })
+    }
+    function showType(data) {
+        switch (data){
+            case 0:return '施工企业';break;
+            case 1:return '监理单位';break;
+            case 2:return '勘察设计';break;
+            case 3:return '劳务公司';break;
+            case 4:return '房地产开发';break;
+            case 5:return '政府及事业单位';break;
+            case 6:return '其他业主单位';break;
+            case 7:return '其他';break;
+        }
+    }
+    function showHasBadRecord(data) {
+        switch (data){
+            case 1:return '正常';break;
+            case 2:return '风险';break;
+            case 3:return '黑名单';break;
+        }
+    }
+    function showContact(data) {
+        var Phone='';
+        for (var i=0;i<data.length;i++){
+            Phone+='<div>'+data[i].name+'&nbsp;'+data[i].phone+'&nbsp;'+data[i].post+'</div>'
+        }
+        return Phone;
+    }
+
+
+    function fuzzyVal() {
+        var obj = {};
+        var fuzzyVal = $('#fuzzy').val();
+        obj[fuzzyVal] = $('#fuzzyVal').val();
+        return obj;
+    }
+    function queryParams(params) {
+        return $.extend(fuzzyVal(),{
+            PageSize: params.limit,
+            Page: params.offset / params.limit + 1,
+            status: $('#status').val(),
+            id:CompanyId
+        })
+    }
+    function responseHandler(ret) {
+        if (typeof ret === 'string') ret = JSON.parse(ret);
+        if (ret.code == 0) {
+            if (ret.total) {
+                return {
+                    total: ret.total,
+                    data: ret.data
+                };
+            } else {
+                return {
+                    data: ret.data
+                };
+            }
+        } else {
+            Alert('后台出现错误');
+        }
+    };
+    function init2() {
+        var columns = [
+            {
+                field: 'Name',
+                title: '项目名称',
+                align: 'center',
+                formatter:function (value,row,index) {
+                    return '<a href="../project/view.html?id='+row.ID+'&Name='+row.Name+'">'+value+'</a>'
+                }
+            },
+            {
+                field: 'Status',
+                title: '是否有不良记录',
+                align: 'center',
+                formatter: function (value) {
+                    var val=parseInt(value);
+                    switch (val){
+                        case 0:return '<span>正常<span>'; break;
+                        case 1:return '<span>常态监管<span>'; break;
+                        case 2:return '<span class="text-danger">重点<span>'; break;
+                        case 3:return '<span class="text-danger">严重<span>'; break;
+                    }
+                },
+            },
+        ];
+        showTable('#table', '/company/query/project', 'get', 'ID', columns);
+    }
+
+    function editUser(id,name) {
+        var id=id||0;
+        var name=name||'新建用户';
+        Open(name,['650px', '450px'],'edit.html?id='+id+'&Name='+name);
+    }
+</script>
+</body>
+</html>

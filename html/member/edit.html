@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑项目</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+    <style>
+        .ibox-content .viewBox:last-child {
+            border-bottom: none;
+        }
+
+        .viewBox {
+            border-bottom: 1px dashed #cccccc;
+            margin: 10px 0 0 0;
+        }
+
+        .viewBox .viewRow {
+            line-height: 30px;
+        }
+
+        .viewBox .viewRow.col-sm-12 {
+            line-height: normal;
+        }
+
+        .viewBox .viewRow label {
+            text-align: right;
+        }
+
+        .viewBox .viewRow .col-sm-8 {
+            padding: 0;
+            line-height: 2;
+        }
+
+        .form-group div {
+            line-height: 30px;
+        }
+    </style>
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <link href="../../js/chosen/chosen.css" rel="stylesheet">
+    <script src="../../js/chosen/chosen.jquery.min.js"></script>
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+<object classid="clsid:6D2088B7-1B97-4960-9535-5115614F29E0" id="WidControl"  width="1" height="1">
+</object>
+<body class="gray-bg" >
+
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>劳工注册</h5>
+                </div>
+                <form >
+                    <div class="ibox-content">
+                        <div style="border: 1px solid #ccc;">
+                            <div class="row viewBox" style="border-bottom: none;margin-bottom: 0;margin-top: 0">
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"
+                                               style="line-height: 50px;background: #23B7E5;">组织结构：</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox">
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span
+                                                class="text-danger">*</span>所属项目：</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control Company" id="ProjectID"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span
+                                                class="text-danger">*</span>是否项目管理员：</label>
+                                        <div class="col-sm-8">
+                                            <input type="checkbox" id="IsPM"> 是
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">所属企业：</label>
+                                        <div class="col-sm-8">
+                                            <select name="" id="CompanyId" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox">
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">是否班组长：</label>
+                                        <div class="col-sm-8">
+                                            <div class="m-b">
+                                                <input type="checkbox" id="IsLeader"> 是
+                                                <input type="text" placeholder="请输入班组名称"  id="classname" class="form-control"style="display:inline-block;width: 80%;display: none">
+                                                <div style="margin-top: 10px">
+                                                    <select id="ClassID" class="form-control" style="display: none"> </select>
+                                                    <select id="SuperiorsID" class="form-control" style="display: none"> </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">当前工种：</label>
+                                        <div class="col-sm-8">
+                                            <select name="" id="JobType" class="form-control">
+                                                <option value="0">钢筋工</option>
+                                                <option value="1">架子工</option>
+                                                <option value="2">模板工</option>
+                                                <option value="3">通风工</option>
+                                                <option value="4">机械设备按装工</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span
+                                                class="text-danger">*</span>所属地区：</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control " id="province"  style="width: 30%;display: inline-block"></select>
+                                            <select class="form-control" id="city" style="width: 30%;display: inline-block"></select>
+                                            <select class="form-control" id="district"  style="width: 30%;display: inline-block"> </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox">
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">安全帽号：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  id="Hardhatnum" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">开始工作日期：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="EntryDate" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">离场日期：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  id="DepartureDate" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox" style="border-bottom: none;margin-bottom: 0;margin-top: 0">
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"
+                                               style="line-height: 50px;background: #23B7E5;">劳工信息：</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox">
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">身份证阅读类型：</label>
+                                        <div class="col-sm-8">
+                                            <a href="">捷宇控件</a>
+                                            <a href="">注册控件</a>
+                                            <button type="button" class="btn btn-w-100 btn-danger" onclick="Idcard()">扫描</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">身份证头像：</label>
+                                        <div class="col-sm-8">
+                                            <img src="" style="width: 100px;height: 100px;border: 1px solid #ccc" alt="" id="Avatar1" class="img-responsive">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">拍照头像：</label>
+                                        <div class="col-sm-8">
+                                            <div class="m-b">
+                                                <button type="button" class="btn btn-w-100 btn-danger" style="display: inline-block"
+                                                        onclick="paishe()">拍摄头像</button>
+                                            </div>
+                                            <div class="m-b">
+                                                <span id="Avatar_disp"></span>
+                                                <div class="btn-group">
+                                                    <label  for="Avatar" class="btn btn-danger">
+                                                        <input type="file" accept="*" name="file" id="Avatar"
+                                                               class="hide" onchange="getFormDataOne(this)"> 上传头像
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox">
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span class="text-danger">*</span>姓名：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="Name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span class="text-danger">*</span>姓别：</label>
+                                        <div class="col-sm-8">
+                                            <label><input type="radio" checked="" value="1" name="Sex"> 男</label>
+                                            <label><input type="radio" checked="" value="0" name="Sex"> 女</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span class="text-danger">*</span>民族：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" placeholder="" id="Nationality" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox">
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span
+                                                class="text-danger">*</span>身份证号：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="IDCard" onblur="CheckCard(this)" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span  class="text-danger">*</span>出生日期：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="Birthday" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span  class="text-danger">*</span>发证机关：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  id="IssueAuth" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox">
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span
+                                                class="text-danger">*</span>家庭住址：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="Address" placeholder="" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span class="text-danger">*</span>有效期：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" placeholder="" class=" form-control" id="SVP"
+                                                   style="width: 40%;display: inline-block">
+                                            <input type="text" placeholder="" class=" form-control" id="EVP"
+                                                   style="width: 40%;;display: inline-block;margin-left: 20px">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">政治面貌：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" placeholder="" class="form-control" id="Political">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox">
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span
+                                                class="text-danger">*</span>手机号码：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" placeholder="" onblur="CheckPhone(this)" id="Phone" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span
+                                                class="text-danger">*</span>紧急联系人号码：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" placeholder="" onblur="CheckPhone(this)" id="EmerCon" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">文化程度：</label>
+                                        <div class="col-sm-8">
+                                            <select name="" id="Education" class="form-control">
+                                                <option value="0">无</option>
+                                                <option value="1">小学</option>
+                                                <option value="2">初中</option>
+                                                <option value="3">高中</option>
+                                                <option value="4">大学</option>
+                                                <option value="5">硕士</option>
+                                                <option value="6">博士</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox">
+
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span
+                                                class="text-danger">*</span>工资标准：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" placeholder="" id="FeeStand" class="form-control"
+                                                   style="display: inline-block;width: 50%;margin-right: 20px">
+                                            <input type="radio" name="isFeeStand" value="0"> <span>临时工</span>
+                                            <input type="radio" name="isFeeStand" value="1"> <span>合同工</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4 viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"><span
+                                                class="text-danger">*</span>是否不良：</label>
+                                        <div class="col-sm-8">
+                                            <input type="radio" name="BadRecord" value="0"> <span>否</span>
+                                            <input type="radio" name="BadRecord" value="1"> <span>是</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox" style="border-bottom: none;margin-bottom: 0;margin-top: 0">
+                                <div class="col-sm-6  viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label"
+                                               style="line-height: 50px;background: #23B7E5;">图片信息：</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row viewBox">
+                                <div class="col-sm-6  viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">身份证正面：</label>
+                                        <div class="col-sm-8">
+                                            <span id="IDP_disp"></span>
+                                            <div class="btn-group">
+                                                <label  for="IDP" class="btn btn-danger">
+                                                    <input type="file" accept="*" name="file" id="IDP"
+                                                           class="hide" onchange="getFormDataOne(this)"> 上传图片
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6  viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">身份证背面：</label>
+                                        <div class="col-sm-8">
+                                            <span id="IDB_disp"></span>
+                                            <div class="btn-group">
+                                                <label  for="IDB" class="btn btn-danger">
+                                                    <input type="file" accept="*" name="file" id="IDB"
+                                                           class="hide" onchange="getFormDataOne(this)"> 上传图片
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row viewBox">
+                                <div class="col-sm-6  viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">近身照片：</label>
+                                        <div class="col-sm-8">
+                                            <span id="CloseupPhoto_disp"></span>
+                                            <div class="btn-group">
+                                                <label  for="CloseupPhoto" class="btn btn-danger">
+                                                    <input type="file" accept="*" name="file" id="CloseupPhoto"
+                                                           class="hide" onchange="getFormDataOne(this)"> 上传图片
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6  viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">是否培训：</label>
+                                        <div class="col-sm-8">
+                                            <span id="Train_disp"></span>
+                                            <div class="btn-group">
+                                                <label  for="Train" class="btn btn-danger">
+                                                    <input type="file" accept="*" name="file" id="Train"
+                                                           class="hide" onchange="getFormDataOne(this)"> 上传图片
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row viewBox" style="padding-bottom: 15px">
+                                <div class="col-sm-6  viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">不良信息：</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group m-b">
+                                                <div class="input-group-btn">
+                                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                            type="button" aria-expanded="false">
+                                                        分组信息 <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" id="Lgroup">
+
+                                                    </ul>
+                                                </div>
+                                                <input type="text" class="form-control hidden"  id="GtypeId">
+                                                <input type="text" class="form-control"  id="GtypeName">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-danger" onclick="addgroup(this,0)">新建</button>
+                                                    <button type="button" class="btn" onclick="editgroup(this)">编辑</button>
+                                                    <button type="button" class="btn btn-default" onclick="detgroup(this)">删除</button>
+                                                </span>
+                                            </div>
+                                            <div class="input-group">
+                                                <div class="input-group-btn">
+                                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                            type="button" aria-expanded="false">
+                                                        图片名称 <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" id="Lgroup_child">
+
+                                                    </ul>
+                                                </div>
+                                                <input type="text" class="form-control hidden" id="GtypeImgId" >
+                                                <input type="text" class="form-control" id="GtypeImgName">
+                                                <span class="input-group-btn">
+                                         <div class="btn-group">
+                                            <label class="btn btn-danger">
+                                                <input type="file" accept="*" name="Lgroup_child[]" multiple="multiple" onchange="uploadImg(this)" class="hide"> 上传
+                                            </label>
+                                        </div>
+                                        <button type="button" class="btn btn-info" onclick="openImg(this)">查看</button>
+                                        <button type="button" class="btn btn-default" onclick="delImg(this)">删除</button>
+                                    </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6  viewRow">
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">分组照片：</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group m-b">
+                                                <div class="input-group-btn">
+                                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                            type="button" aria-expanded="false">
+                                                        分组信息 <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" id="group">
+
+                                                    </ul>
+                                                </div>
+                                                <input type="text" class="form-control hidden"  id="GtypeId">
+                                                <input type="text" class="form-control"  id="GtypeName">
+                                                <span class="input-group-btn">
+                                            <button type="button" class="btn btn-danger" onclick="addgroup(this,1)">新建</button>
+                                            <button type="button" class="btn" onclick="editgroup(this)">编辑</button>
+                                            <button type="button" class="btn btn-default" onclick="detgroup(this)">删除</button>
+                                        </span>
+                                            </div>
+                                            <div class="input-group">
+                                                <div class="input-group-btn">
+                                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                            type="button" aria-expanded="false">
+                                                        图片名称 <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" id="group_child">
+
+                                                    </ul>
+                                                </div>
+                                                <input type="text" class="form-control hidden" id="GtypeImgId" >
+                                                <input type="text" class="form-control" id="GtypeImgName">
+                                                <span class="input-group-btn">
+                                             <div class="btn-group">
+                                                <label class="btn btn-danger">
+                                                    <input type="file" accept="*" name="group_child[]" multiple="multiple" onchange="uploadImg(this)" class="hide"> 上传
+                                                </label>
+                                            </div>
+                                            <button type="button" class="btn btn-info" onclick="openImg(this)">查看</button>
+                                            <button type="button" class="btn btn-default" onclick="delImg(this)">删除</button>
+                                        </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row viewBox" style="padding-bottom: 15px">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label" style="text-align: right">备注：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="Remark"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center submit" style="margin-top: 20px">
+                                <button type="reset"  class="btn btn-w-m btn-default">清空</button>
+                                <button type="button" class="btn btn-w-m btn-info" onclick="save()">提交</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script language=javascript>
+    function Idcard(){
+        var result;
+        //注意：第一个参数为对应的设备端口，USB型为1001，串口型为1至16
+        //第二个参数为文件保存路径及文件名，当为“”时，保存在系统临时目录(由API GetTempPath获得)
+        //ReadCard函数调用示例如下：
+        //result=WidControl.ReadCard(1001,"C:\\wid\\photo.bmp");
+        //result=WidControl.ReadCard(1001,"C:\\wid\\");
+        //result=WidControl.ReadCard(1001,"C:\\wid");
+        //result=WidControl.ReadCard(1001,"");
+        result=WidControl.ReadCard(1001,"C:\\wid\\photo.bmp");
+        //  document.all['Mode'].value=WidControl.GetSAMID();
+        if (result==1){
+            if(WidControl.GetSex()==='男'){
+                $('input[name="Sex"]').eq(0).prop('checked','checked')
+            }else{
+                $('input[name="Sex"]').eq(1).prop('checked','checked')
+            }
+            function Birthday(str) {
+                var year=str.substring(0,4);
+                var month=str.substring(4,6);
+                var day=str.substring(6,8);
+                var str=year+'-'+month+'-'+day;
+                return str;
+            }
+            function startEnd(str,num) {
+                var arr=str.split('-');
+                arr[num]=arr[num].replace(/\./g,'-');
+                return arr[num]
+            }
+
+            document.getElementById('Name').value=WidControl.GetName();
+
+            document.getElementById('Nationality').value=WidControl.GetFolk();
+            document.getElementById('Birthday').value=Birthday(WidControl.GetBirthDate());
+            document.getElementById('Address').value=WidControl.GetAddress();
+            document.getElementById('IDCard').value=WidControl.GetCode();
+            document.getElementById('IssueAuth').value=WidControl.GetAgency();
+            document.getElementById('SVP').value=startEnd(WidControl.GetValid(),0);
+            document.getElementById('EVP').value=startEnd(WidControl.GetValid(),1);
+            document.getElementById('Avatar1').src='data:image/png;base64,'+WidControl.GetPhotobuf();
+            document.getElementById('IDP_disp').innerHTML="上传路径：C:\\wid\\1.bmp";
+            document.getElementById('IDB_disp').innerHTML="上传路径：C:\\wid\\2.bmp";
+
+            if(document.getElementById('IDCard').value=='510302198207311013'){
+                Confirm(document.getElementById('Name').value+'曾被成都建工管理员列入劳务黑名单！！</br>' +
+                    '<h3>详情</h3>'+
+                    '1，此班组长在北湖春天项目以索要民工工资名义索要进度款</br>'+
+                    '2，多次拨打市长电话威胁',function () {
+                    window.top.close(LayerConfirm)
+                },function () {
+                });
+            }
+        }else{
+            if (result==-1)
+                alert("端口初始化失败！");
+            if (result==-2)
+                alert("请重新将卡片放到读卡器上！");
+            if (result==-3)
+                alert("读取数据失败！");
+            if (result==-4)
+                alert("生成照片文件失败，请检查设定路径和磁盘空间！");
+            if(result == -5)
+                alert("加载动态库失败");
+        }
+    }
+
+</script>
+<script>
+    var Name='';
+    var UserID=0;
+    var TempProjectID=0;
+    var TempCompanyID=0;
+    var PID=-1;
+    $(function () {
+        UserID = parseInt(window.location.href.getQueryString("id"))||0;
+        Name = window.location.href.getQueryString("Name");
+        if(Name){
+            $('.ibox-title h5').html(Name);
+            $('.ibox-tools a').attr('href','edit.html?id='+UserID+'&Name='+Name)
+        }
+        // initOrg();
+        SelcetArea();
+        changGroup();
+
+
+
+        //设置时间选择
+        $('#Birthday').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+        $('#DepartureDate').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+        $('#EntryDate').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+        $('#SVP').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+        $('#EVP').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+
+        //初始化加载值
+        setTimeout(init(), 500)
+        // initOrg();
+    });
+
+
+    function init(){
+        Ajax('/labor/info','get',{ID:UserID}, function (ret) {
+            var list=ret.labor;
+            $('#ProjectID').val(list.ProjectID);
+            TempProjectID=list.ProjectID
+            TempCompanyID=list.CompanyID
+            // $('#ProjectID').trigger('chosen:updated')
+            list.IsPM==1? $('#IsPM').prop('checked',true): $('#IsPM').prop('checked',true);
+            if(list.IsLeader==1){
+                $('#IsLeader').prop('checked',true);
+                $('#classname').css('display','inline-block');
+                $('#SuperiorsID').css('display','block');
+            }else{
+                $('#IsLeader').prop('checked',false);
+                $('#ClassID').css('display','block')
+            }
+
+            $('#classname').val(list.ClassName);
+            $('#ClassID').val(list.ClassID);
+            $('#SuperiorsID').val(list.Superiors);
+            $('#JobType').val(list.JobType);
+
+
+            $('#province').val(list.PID);
+            PID = list.PID;
+            $('#city').append('<option value="'+list.CID+'">'+list.CName+'</option>');
+            $('#district').append('<option value="'+list.DID+'">'+list.DName+'</option>');
+            $('#Hardhatnum').val(list.Hardhatnum);
+            $('#EntryDate').val(list.EntryDate);
+            $('#DepartureDate').val(list.DepartureDate);
+            $('#Avatar_disp').html('<img src="'+localHost+list.Avatar+'" style="width: 100px;height: 100px">');
+
+            $('#Name').val(list.Name);
+            list.Sex==1? $('[name="Sex"]').eq(0).prop('checked',true):$('[name="Sex"]').eq(1).prop('checked',true);
+            list.BadRecord==1? $('[name="BadRecord"]').eq(1).prop('checked',true):$('[name="BadRecord"]').eq(0).prop('checked',true);
+            $('#Birthday').val(list.Birthday);
+            $('#Nationality').val(list.Nationality);
+            $('#IDCard').val(list.IDCard);
+            $('#Address').val(list.Address);
+            $('#SVP').val(list.SVP);
+            $('#EVP').val(list.EVP);
+            $('#IssueAuth').val(list.IssueAuth);
+            $('#Political').val(list.Political);
+            $('#Phone').val(list.Phone);
+            $('#EmerCon').val(list.EmerCon);
+            $('#Education').val(list.Education);
+            $('#FeeStand').val(list.FeeStand);
+            list.isFeeStand==1? $('[name="isFeeStand"]').eq(1).prop('checked',true): $('[name="isFeeStand"]').eq(0).prop('checked',true);
+            $('#IDP_disp').html('<img src="'+localHost+list.IDP+'" >');
+            $('#IDB_disp').html('<img src="'+localHost+list.IDB+'" >');
+            $('#CloseupPhoto_disp').html('<img src="'+localHost+list.CloseupPhoto+'" >');
+            $('#Train_disp').html('<img src="'+localHost+list.Train+'" >');
+            $('#Remark').html(list.Remark);
+
+
+            $('#Lgroup').html( SetGroup(list.pic_group.bad_list));
+            $('#group').html( SetGroup(list.pic_group.info));
+
+            initgroup();
+            initOrg();
+            $('#ProjectID').trigger('chosen:updated')
+        });
+    };
+
+
+
+
+    function paishe() {
+        var url='./paishe.html?UserID='+UserID;
+        Open('拍摄头像',['500px','500px'],url);
+    }
+
+
+    //是否班组长
+    function changGroup() {
+        $('#IsLeader').click(function () {
+            var type=$(this).prop('checked');
+            if(type){
+                $('#classname').css('display','inline-block');
+                $('#SuperiorsID').css('display','block');
+                $('#ClassID').css('display','none');
+            }else{
+                $('#ClassID').css('display','block');
+                $('#classname').css('display','none');
+                $('#SuperiorsID').css('display','none');
+            }
+        })
+    }
+
+    function initgroup(){
+        $('.input-group').on('click','li a', function () {
+            var id= $(this).attr('attrId');
+            var parid=$(this).parents('ul').attr('id');
+            if(parid=='Lgroup'||parid=='group'){
+                Ajax('/company/pic/list','get',{ID: id}, function (ret) {
+                    $('#'+parid+'_child').html(SetGroup(ret.pic_list));
+                });
+            }
+            $(this).parents('.input-group-btn').siblings('input').eq(0).val(id);
+            $(this).parents('.input-group-btn').siblings('input').eq(1).val($(this).text())
+        });
+    }
+
+    //添加项目信息
+    function initOrg(){
+        SyncAjax('/project/allproject','get',{id:UserID},function (ret) {
+            // SelectBox('ProjectID',ret.list,'ID','Name');
+            SelectBox2($('.Company'),ret.list,'ID','Name');
+            $('.Company').chosen();
+            var infoData=ret.list;
+            function showCompanyGroup(val){
+                for(var i=0;i<infoData.length;i++){
+                    if(infoData[i]['ID']==val){
+                        SelectBox('CompanyId',infoData[i].companyinfo,'ID','Name');
+                        SelectBox('ClassID',infoData[i].labor_group_info,'ClassID','ClassName');
+                        SelectBox('SuperiorsID',infoData[i].labor_group_info,'SuperiorsID','SuperiorsName');
+                        break;
+                    }
+                }
+            }
+            if(TempProjectID!=0){
+                $('#ProjectID').val(TempProjectID);
+                $('#ProjectID').trigger('chosen:updated')
+                showCompanyGroup(TempProjectID)
+                $('#CompanyId').val(TempCompanyID)
+                // SelectBox('CompanyId',infoData[0].companyinfo,'ID','Name');
+            }
+
+            // if(ProjectID&&ProjectID>0) {
+            //     $('#ProjectID').val(ProjectID);
+            //     $('#ProjectID').attr('disabled','disabled');
+            //     showCompanyGroup(ProjectID)
+            // }else{
+            //     SelectBox('CompanyId',infoData[0].companyinfo,'ID','Name');
+            //     SelectBox('ClassID',infoData[0].labor_group_info,'ClassID','ClassName');
+            //     SelectBox('SuperiorsID',infoData[0].labor_group_info,'SuperiorsID','SuperiorsName');
+            // }
+            $('#ProjectID').change(function () {
+                var val=$(this).val();
+                showCompanyGroup(val)
+            })
+        },function () {
+
+        }, false, false);
+    }
+
+    //分组信息
+    function addgroup(_this,Gtype) {
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.find('#GtypeId');
+        var GtypeName=oParents.find('#GtypeName');
+        if(!GtypeName.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+        var data={
+            Gtype:Gtype,
+            Name:GtypeName.val(),
+            CID:UserID
+        };
+        Ajax('/labor/addgroup','post',data,function (ret) {
+            Alert('新建分组成功！！');
+            dropdown.append('<li><a href="javascript:void(0)" attrId='+ret.id+'>'+ret.name+'</a></li>');
+            GtypeId.val(ret.id);
+            GtypeName.val(ret.name);
+            initgroup()
+        })
+    }
+    function editgroup(_this) {
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.find('#GtypeId');
+        var GtypeName=oParents.find('#GtypeName');
+        if(!GtypeName.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+        var data={
+            ID:GtypeId.val(),
+            Name:GtypeName.val(),
+        };
+        Ajax('/company/group/edit','post',data,function (ret) {
+            Alert('编辑建分组成功！！');
+            dropdown.find('a[attrId="'+GtypeId.val()+'"]').html(GtypeName.val());
+        })
+    }
+    function detgroup(_this) {
+        Confirm("确定删除分组？",
+            function () {
+                var oParents=$(_this).parents('.input-group');
+                var dropdown=oParents.find('.dropdown-menu');
+                var GtypeId=oParents.find('#GtypeId');
+                var GtypeName=oParents.find('#GtypeName');
+                var ulnode = $(_this).parents('[class="input-group m-b"]').next().find('ul');
+                if(!GtypeName.val()){
+                    Alert('请选择分组信息！!');
+                    return;
+                }
+                var data={
+                    ID:GtypeId.val()
+                };
+                Ajax('/company/deletepicgroup','delete',data,function (ret) {
+                    dropdown.find('a[attrId="'+GtypeId.val()+'"]').parent().empty();
+                    GtypeId.val('');
+                    GtypeName.val('');
+                    ulnode.empty();
+                    Alert('删除分组成功！！');
+                    window.top.close(LayerConfirm)
+                })
+            },function () {})
+    }
+
+    //分组图片
+    function uploadImg(_this){
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.prev().find('#GtypeId');
+        var GtypeImgId=oParents.find('#GtypeImgId');
+        var GtypeImgName=oParents.find('#GtypeImgName');
+
+        if(!GtypeId.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+
+        var formData=getFormData(_this);
+        formData.append('GID',GtypeId.val());
+
+
+        Ajax('/labor/uploadpic','post',formData,function (ret) {
+            Alert('上传图片成功！！');
+            for(var i=0;i<ret.data.length;i++){
+                dropdown.append('<li><a attrId='+ret.data[i].id+'>'+ret.data[i].name+'</a></li>');
+            }
+            initgroup();
+        },function(){},true)
+    }
+    function openImg(_this) {
+        var oParents=$(_this).parents('.input-group');
+        var GtypeImgId=oParents.find('#GtypeImgId');
+        Ajax('/company/pic/getone','get',{ID:GtypeImgId.val()},function (ret) {
+            Open('','',localHost+ret.url)
+        })
+    }
+    function delImg(_this){
+        Confirm("确定删除图片？",function(){
+            var oParents=$(_this).parents('.input-group');
+            var dropdown=oParents.find('.dropdown-menu');
+            var GtypeImgId=oParents.find('#GtypeImgId');
+            var GtypeImgName=oParents.find('#GtypeImgName');
+            if(!GtypeImgId.val()){
+                Alert('请选择图片信息！!');
+                return;
+            }
+            Ajax('/company/deletepic','delete',{ID:GtypeImgId.val()},function (ret) {
+                dropdown.find('a[attrId="'+GtypeImgId.val()+'"]').parent().empty();
+                GtypeImgId.val('');
+                GtypeImgName.val('');
+                Alert('图片删除成功！！');
+                window.top.close(LayerConfirm)
+            })
+        },function(){})
+    }
+
+    function group_list(id1,id2){
+        var arr=[];
+        $('#'+id1+' li').each(function (n,ele) {
+            arr.push($(ele).find('a').attr('attrId'));
+        });
+        if(id2){
+            $('#'+id2+' li').each(function (n,ele) {
+                arr.push($(ele).find('a').attr('attrId'));
+            });
+        }
+        return arr
+    }
+
+
+
+
+    function save() {
+        if(!$('#province').val()){
+            Alert('必须选择地区')
+        }
+
+
+        var formData = new FormData();
+        formData.append('ID',UserID);  //年龄
+        formData.append('Avatar','');  //头像
+        formData.append('Age',0);  //年龄
+      
+
+        var IDP=document.getElementById('IDP').files[0];
+        var IDB=document.getElementById('IDB').files[0];
+        var CloseupPhoto=document.getElementById('CloseupPhoto').files[0];
+        var Train=document.getElementById('Train').files[0];
+        var Avatar=document.getElementById('Avatar').files[0];
+        formData.append('IDP',IDP);
+        formData.append('IDB',IDB);
+        formData.append('CloseupPhoto',CloseupPhoto);
+        formData.append('Train',Train);
+
+        formData.append('ProjectID',$('#ProjectID').val());
+        formData.append('IsPM',$('#IsPM').prop('checked'));
+        formData.append('CompanyID',$('#CompanyId').val());
+
+        formData.append('IsLeader',$('#IsLeader').prop('checked'));
+        formData.append('classname',$('#classname').val());
+        formData.append('ClassID',$('#ClassID').val()||0);
+        formData.append('SuperiorsID',$('#SuperiorsID').val()||0);
+        formData.append('JobType',$('#JobType').val());
+        formData.append('PID',$('#province').val()||0);
+        formData.append('CID',$('#city').val()||0);
+        formData.append('DID',$('#district').val()||0);
+
+        formData.append('Hardhatnum',$('#Hardhatnum').val());
+        formData.append('EntryDate',$('#EntryDate').val());
+        formData.append('DepartureDate',$('#DepartureDate').val());
+
+        formData.append('Name',$('#Name').val());
+        formData.append('Sex',$('input[name="Sex"]:checked').val());
+        formData.append('Nationality',$('#Nationality').val());
+        formData.append('IDCard',$('#IDCard').val());
+        formData.append('Birthday',$('#Birthday').val());
+        formData.append('IssueAuth',$('#IssueAuth').val());
+        formData.append('Address',$('#Address').val());
+        formData.append('SVP',$('#SVP').val());
+        formData.append('EVP',$('#EVP').val());
+        formData.append('Political',$('#Political').val());
+        formData.append('Phone',$('#Phone').val());
+        formData.append('EmerCon',$('#EmerCon').val());
+        formData.append('Education',$('#Education').val());
+        formData.append('FeeStand',$('#FeeStand').val());
+        formData.append('isFeeStand',$('input[name="isFeeStand"]:checked').val());
+        formData.append('BadRecord',$('input[name="BadRecord"]:checked').val());
+        formData.append('Remark',$('#Remark').val());
+
+        formData.append('group_list',JSON.stringify(group_list('Lgroup','group')));
+
+        //判断长度是否大于20
+        var check_result = CheckLength(formData)
+        if (check_result[0]) {
+            Alert(check_result[1])
+            return;
+        }
+
+        Ajax('/labor/update','post',formData,function (ret) {
+            Alert('上传成功！！');
+            window.location.href='list.html'
+        },function () {},true)
+    }
+
+</script>
+
+</body>
+</html>

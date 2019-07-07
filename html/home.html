@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../css/animate.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/commn.css" rel="stylesheet">
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+
+    <link href="../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../js/plugins/layer/layer.min.js"></script>
+    <script src="../js/common.js"></script>
+    <style>
+        .project-list table tr td{
+            padding:7px 4px;
+        }
+       /* .overf{
+            overflow: hidden;!*超出部分隐藏*!
+            text-overflow:ellipsis;!* 超出部分显示省略号 *!
+            white-space: nowrap;!*规定段落中的文本不进行换行 *!
+            width: 180px;!*需要配合宽度来使用*!
+            font-size: 30px;
+            display: block;
+        }*/
+        .btn-sm{
+            padding: 2px 5px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+<object classid="clsid:6D2088B7-1B97-4960-9535-5115614F29E0" id="WidControl"  width="1" height="1">
+</object>
+    <div class="wrapper wrapper-content animated fadeInRight" style="padding-top: 0">
+        <div class="row">
+            <div class="search" id="search" style="border-bottom: none">
+                <div class="input-group" style="display:inline-block">
+                    <select class="form-control" id="fuzzy"  style="width: 150px">
+                        <option value="projectname">项目名称</option>
+                        <option value="companyname">企业名称</option>
+                        <option value="laborname">劳工名称</option>
+                        <option value="idcard">身份证</option>
+                    </select>
+                    <input type="text" class="form-control" id="fuzzyVal" style="width: 400px">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" onclick="init()" style="width: 100px">搜索</button>
+                            <button type="button" class="btn btn-danger"  onclick="Idcard()" style="width: 100px">
+                                <i class="fa fa-camera"></i></button>
+                        <!--<button type="button" class="btn btn-danger" style="width: 100px" id="bestSearch">高级搜索</button>-->
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div id="" class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>企业信息</h5>
+                        <div class="ibox-tools">
+                            <span id="company_all"></span>
+                            <a href="company/list.html" class="btn btn-info btn-xs">查询更多</a>
+                        </div>
+                    </div>
+                    <div class="ibox-content" style="padding: 5px">
+                        <div class="echarts" style="height:680px;overflow: auto">
+                            <div class="project-list">
+                                <table class="table table-hover"  id="company">
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>项目信息</h5>
+                        <div class="ibox-tools">
+                            <span id="project_all"></span>
+                            <a href="project/list.html" class="btn btn-info btn-xs">查询更多</a>
+                        </div>
+                    </div>
+                    <div class="ibox-content" style="padding: 5px">
+                        <div class="echarts" style="height:680px;overflow: auto">
+                            <div class="project-list">
+                                <table class="table table-hover" id="project">
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>劳工信息</h5>
+                        <div class="ibox-tools">
+                            <span id="labor_all"></span>
+                            <a href="member/list.html" class="btn btn-info btn-xs">查询更多</a>
+                        </div>
+                    </div>
+                    <div class="ibox-content" style="padding: 5px">
+                        <div class="echarts" style="height:680px;overflow: auto">
+                            <div class="project-list">
+                                <table class="table table-hover" id="labor">
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>银行信息</h5>
+                        <div class="ibox-tools">
+                            <span id="bank_all"></span>
+                            <a href="bank/list.html" class="btn btn-info btn-xs">查询更多</a>
+                        </div>
+                    </div>
+                    <div class="ibox-content" style="padding: 5px">
+                        <div class="echarts" style="height:680px;overflow: auto">
+                            <div class="project-list">
+                                <table class="table table-hover" id="bank">
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>饼状图</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="echarts-line-chart" style="overflow: hidden;height: 420px">
+                            <div class="myChartnode" style="width: 100%;height: 380px;margin: 0 auto"></div>
+                            <p class="text-center">正常与异常公司对比</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>饼状图</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="echarts-line-chart" style="overflow: hidden;height: 420px">
+                            <div class="myChartnode" style="width: 100%;height: 380px;margin: 0 auto"></div>
+                            <p class="text-center">正常与异常项目对比</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>饼状图</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="echarts-line-chart" style="overflow: hidden;height: 420px">
+                            <div class="myChartnode" style="width: 100%;height: 380px;margin: 0 auto"></div>
+                            <p class="text-center">正常与异常劳工对比</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function Idcard(){
+        var result;
+        //注意：第一个参数为对应的设备端口，USB型为1001，串口型为1至16
+        //第二个参数为文件保存路径及文件名，当为“”时，保存在系统临时目录(由API GetTempPath获得)
+        //ReadCard函数调用示例如下：
+        //result=WidControl.ReadCard(1001,"C:\\wid\\photo.bmp");
+        //result=WidControl.ReadCard(1001,"C:\\wid\\");
+        //result=WidControl.ReadCard(1001,"C:\\wid");
+        //result=WidControl.ReadCard(1001,"");
+        result=WidControl.ReadCard(1001,"C:\\wid\\photo.bmp");
+        //  document.all['Mode'].value=WidControl.GetSAMID();
+        if (result==1){
+            var idCard=WidControl.GetCode();
+            alert(idCard);
+            Ajax('/labor/query', 'GET', {IDCard:idCard}, function (ret) {
+                if(ret.labor_list.length>0){
+                    var listArr = ret.labor_list;
+                    var list=listArr[0];
+                    window.location.href='member/view.html?id='+list.ID+'&Name='+list.Name;
+                }else{
+                    Alert('没有查到用户！！！')
+                }
+            })
+        }else{
+            if (result==-1)
+                alert("端口初始化失败！");
+            if (result==-2)
+                alert("请重新将卡片放到读卡器上！");
+            if (result==-3)
+                alert("读取数据失败！");
+            if (result==-4)
+                alert("生成照片文件失败，请检查设定路径和磁盘空间！");
+            if(result == -5)
+                alert("加载动态库失败");
+        }
+    }
+    function fuzzyVal() {
+        var obj = {};
+        var fuzzyVal = $('#fuzzy').val();
+        obj[fuzzyVal] = $('#fuzzyVal').val();
+        return obj;
+    }
+
+    $(function () {
+       init();
+    });
+    function init() {
+        var data=fuzzyVal();
+        Ajax('/index/info','get',data,function (ret) {
+            var  company=ret.company;
+            var  labor=ret.labor;
+            var  project=ret.project;
+            var  bank=[
+                {id:'1',name:'中国农业银行',amount:123214.00,num:10},
+                {id:'2',name:'中国建设银行',amount:454352.00,num:12},
+                {id:'3',name:'中国工商银行',amount:132123.00,num:5},
+                {id:'4',name:'中国银行',amount:9868326.00,num:6}
+            ];
+
+            var companyCont='';
+            for(var i=0;i<company.length;i++){
+                companyCont+='<tr>'+
+                    '<td class="project-title" width="75%">' +
+                        '<a  class="overf" href="company/view.html?CompanyId='+company[i].id+'&Name='+company[i].name+'">'+company[i].name+'</a></td>'+
+                    '<td class="project-actions" width="15%">'+
+                        '<a title="编辑" href="company/view.html?CompanyId='+company[i].id+'&Name='+company[i].name+'"' +
+                            'class="btn btn-white btn-sm">编辑</a>'+/*<i class="fa fa-pencil">*/
+                    '</td>'+
+                    '</tr>'
+            }
+            $('#company tbody').html(companyCont);
+
+            var laborCont='';
+            for(var l=0;l<labor.length;l++){
+                laborCont+='<tr>'+
+                    '<td class="project-title" width="75%">' +
+                    '<a   class="overf" href="member/view.html?id='+labor[l].id+'&Name='+labor[l].name+'">'+labor[l].name+'</a></td>'+
+                    '<td class="project-actions" width="15%">'+
+                    '<a title="编辑" href="member/view.html?id='+labor[l].id+'&Name='+labor[l].name+'"' +
+                    'class="btn btn-white btn-sm">编辑</a>'+
+                    '</td>'+
+                    '</tr>'
+            }
+            $('#labor tbody').html(laborCont);
+
+            var projectCont='';
+            for(var p=0;p<project.length;p++){
+                projectCont+='<tr>'+
+                    '<td class="project-title" width="75%">' +
+                    '<a  class="overf" href="project/view.html?id='+project[p].id+'&Name='+project[p].name+'">'+project[p].name+'</a></td>'+
+                    '<td class="project-actions" width="15%">'+
+                    '<a title="编辑" href="project/view.html?id='+project[p].id+'&Name='+project[p].name+'"' +
+                    'class="btn btn-white btn-sm">编辑</a>'+
+                    '</td>'+
+                    '</tr>'
+            }
+            $('#project tbody').html(projectCont);
+
+            var bankCont='';
+            for(var b=0;b<bank.length;b++){
+                bankCont+='<tr>'+
+                    '<td class="project-title" width="75%">' +
+                        '<a  class="overf" href="bank/list.html">'+bank[b].name+'</a>' +
+                    '</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                        '<td  style="text-indent: 20px" width="15%">代发项目数:'+bank[b].num+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                        '<td  style="text-indent: 20px" width="15%">代发总金额:'+bank[b].amount+'</td>'+
+                    '</tr>'
+
+
+
+            }
+            $('#bank tbody').html(bankCont)
+        })
+    }
+
+</script>
+
+<script src="../js/echarts.min.js"></script>
+<script type="text/javascript">
+
+
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChartnode = $('.myChartnode').get(0);
+    var myChartnode1 = $('.myChartnode').get(1);
+    var myChartnode2 = $('.myChartnode').get(2);
+
+    var myChart = echarts.init(myChartnode);
+    var myChart1 = echarts.init(myChartnode1);
+    var myChart2 = echarts.init(myChartnode2);
+
+    // 指定图表的配置项和数据
+
+    function showeChats(_data) {
+       return option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} {d}%"
+            },
+            series: [
+                {
+                    name: '企业信息',
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:_data
+                }
+            ]
+        };
+    }
+    Ajax('/index/pie','get','',function (ret) {
+        $('#company_all').html('<span class="text-danger" style="vertical-align: text-bottom">总数:'+ret.total_company+'</span>');
+        $('#project_all').html('<span class="text-danger" style="vertical-align: text-bottom">总数:'+ret.total_project+'</span>');
+        $('#labor_all').html('<span class="text-danger" style="vertical-align: text-bottom">总数:'+ret.total_labor+'</span>');
+
+        myChart.setOption(showeChats(ret.pie_company));
+        myChart1.setOption(showeChats(ret.pie_project));
+        myChart2.setOption(showeChats(ret.pie_labor));
+
+
+
+    })
+    // 使用刚指定的配置项和数据显示图表。
+
+</script>
+</body>
+</html>

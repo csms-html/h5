@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <link href="../../js/page/myPagination.css" rel="stylesheet">
+    <script src="../../js/page/myPagination.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>查看项目</h5>
+                    <div class="ibox-tools">
+                        <a href="new.html" class="btn btn-info btn-xs">导入模板</a>
+                        <a href="new.html" class="btn btn-info btn-xs">新建项目</a>
+                    </div>
+                </div>
+
+
+                <div class="search" id="search">
+                    <div class="input-group" style="display:inline-block">
+                        <select class="form-control" style="width: 150px" id="fuzzy">
+                            <option value="0">项目名称</option>
+                            <option value="1">劳务公司</option>
+                        </select>
+                        <input type="text" class="form-control" id="fuzzyVal" style="width: 400px">
+                        <select class="form-control" id="province" style="width: 150px"></select>
+                        <select class="form-control" id="city" style="width: 150px"></select>
+                        <select class="form-control" id="district" style="width: 150px"></select>
+                        <select class="form-control" id="Status" style="width: 150px">
+                            <option value="0">正常</option>
+                            <option value="1">常态监管</option>
+                            <option value="2">重点</option>
+                            <option value="3">严重</option>
+                        </select>
+                        <select class="form-control" id="WStatus" style="width: 150px">
+                            <option value="3">全部</option>
+                            <option value="0">全额到</option>
+                            <option value="1">部分到</option>
+                            <option value="2">未发放</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" onclick="search()">搜索</button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="cont-list">
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                     <div id="pagination" class="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var Status = 5;
+    var WStatus = 3;
+    $(function () {
+        Status = parseInt(window.location.href.getQueryString("Status")) ||4;
+        if (Status == 5) {
+            $('#Status').hide();
+            $('.ibox-title h5').html('不良项目');
+        }
+        SelcetArea();
+        var data = {
+            ProjectName: '',
+            CompanyName: '',
+            PID: 0,
+            CID: 0,
+            DID: 0,
+            Status: Status,
+            WStatus: WStatus,
+            Page: Page,
+            PageSize: PageSize,
+        };
+        init(data);
+    });
+    function search() {
+        var name = $('#fuzzyVal').val();
+        if ($('#fuzzy').val() == 0) {
+            var ProjectName = name;
+            var CompanyName = '';
+        } else {
+            ProjectName = '';
+            CompanyName = name;
+        }
+        var data = {
+            ProjectName: ProjectName,
+            CompanyName: CompanyName,
+            PID: parseInt($('#province').val()) || 0,
+            CID: parseInt($('#city').val()) || 0,
+            DID: parseInt($('#district').val()) || 0,
+            Status: parseInt($('#Status').val()) || Status,
+            WStatus: parseInt($('#WStatus').val()) || WStatus,
+            Page: Page,
+            PageSize: PageSize,
+        };
+        init(data)
+    }
+
+    //通过表格
+    function init(data) {
+        Ajax('/project/search', 'GET', data, function (ret) {
+            var str = '';
+            var listArr = ret.project;
+            for (var i = 0; i < listArr.length; i++) {
+                var list=listArr[i];
+                str += '<li><div class="row"><div class="col-sm-4">' +
+                    '<div><span class="cont-list-tit">项目名称:</span>' +
+                        '<a href="./view.html?id='+list.ID+'&Name='+list.Name+'">'+list.Name+'</a></div>' +
+                    '<div><span class="cont-list-tit">项目类型:</span><span>' + showType(list.Type) + '</span></div>' +
+                    '<div><span class="cont-list-tit">参与人数:</span><span>' + list.Persons + '</span></div>' +
+                    '<div><span class="cont-list-tit">工期:</span><span href="">' + list.StartTime+' '+list.EndTime + '</span></div>' +
+                    '<div><span class="cont-list-tit">项目地址:</span><span>'+list.Address+'</span></div></div>' +
+                    '<div class="col-sm-4">' +
+                    '<div><span class="cont-list-tit">建设方:</span>' +
+                        '<a href="../company/view.html?CompanyId='+list.Build+'&Name='+list.BuildName+'">'+list.BuildName+'</a></div>' +
+                    '<div><span class="cont-list-tit">施工负责人:</span>'+list.OwnerManager+'</div>' +
+                    '<div><span class="cont-list-tit">建设方:</span>' +
+                    '<a href="../company/view.html?CompanyId='+list.Cons+'&Name='+list.ConsName+'">'+list.ConsName+'</a></div>' +
+                    '<div><span class="cont-list-tit">业主负责人:</span>'+list.ConsManager+'</div>' +
+                    '<div><span class="cont-list-tit">项目不良信息:</span><span class="'+(list.Status==3?'text-danger':'')+'">'
+                    +showStatus(list.Status)+'</span></div>' +
+               /*     '<div><span class="cont-list-tit">项目进度:</span><a href="progressNew.html?id='+list.ID+'&Name='+list.Name+'">添加</a></div>' ++*/
+                    '</div>'+
+                    '<div class="col-sm-4">' +
+
+                    '<div><span class="cont-list-tit">工资发放:</span><span>' +
+                        +list.WagePercent+'%'+'</span></div>' +
+                    '<div><span class="cont-list-tit">担保金额:</span><span>'+list.GAmount+'￥</span></div>' +
+                    '<div><span class="cont-list-tit">总产值:</span><span>'+list.Total+'￥</span></div>' +
+                    '<div><span class="cont-list-tit">总领款:</span><span>'+list.TotalPay+'￥</span></div>' +
+                    '<div><span class="cont-list-tit">最终发放统计:</span><span>'+list.Issue+'￥</span></div>' +
+                    '</div></div></li>'
+                }
+            if (!str) {
+                $('.cont-list').html('<li class="text-center" style="font-size: 24px;margin: 20px">暂无数据</li>')
+            } else {
+                $('.cont-list').html(str);
+            }
+             myPage(ret.total)
+        })
+    }
+
+    function showType(data) {
+        switch (data) {
+            case 0:return '政府投资'; break;
+            case 1:return '民营开发';break;
+            case 2:return '国企分包'; break;
+            case 3:return '其他'; break;
+        }
+    }
+    function showWStatus(data) {
+        switch (data) {
+            case 0:return '全额到'; break;
+            case 1:return '部分到';break;
+            case 2:return '未发放'; break;
+        }
+    }
+    function showStatus(data) {
+        switch (data) {
+            case 0:return '正常'; break;
+            case 1:return '常态监管'; break;
+            case 2:return '重点';break;
+            case 3:return '严重'; break;
+        }
+    }
+
+
+
+</script>
+
+
+</body>
+</html>

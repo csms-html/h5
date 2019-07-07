@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑项目</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>新建保函</h5>
+                </div>
+                <form class="form-horizontal">
+                    <div class="row" style="margin-top: 15px;margin-left: 0;margin-right: 0">
+                        <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span> 项目名称：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="ProjectID">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span>企业名称：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="CompanyID">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span>担保公司：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="GuaCompany">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span>注册资本（元）：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="Capital" onblur="CheckNumber(this)"  placeholder="请输入注册资本（元） " class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span>企业性质：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="Nature"   placeholder="请输入企业性质 " class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span>保函编号：</label>
+                                    <div class="col-sm-8">
+                                       <input type="text" id="Name"  class="form-control">
+                                    </div>
+                                </div>
+                           <!--     <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span>保函编号：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id=""  class="form-control">
+                                    </div>
+                                </div>-->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span>保函金额（元）：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="Amount" onblur="CheckNumber(this)" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span>保函种类：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="Kind"  class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span> 保函期限：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="Deadline"  placeholder="请输入保函期限" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span> 保函竣工日期：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="Expiretime"  placeholder="保函竣工日期" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span> 总费率：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="Totalrate" onblur="CheckNumber(this)"  placeholder="总费率" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="text-danger">*</span> 总收费金额（元）：</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="Total" onblur="CheckNumber(this)"  placeholder="总收费金额" class="form-control">
+                                    </div>
+                                </div>
+
+
+                        </div>
+                        <div class="col-sm-6"  >
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span> 实际收费金额（元）：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="RealAC" onblur="CheckNumber(this)" placeholder="实际收费金额" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span> 保证金比例：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="Marginratio" onblur="CheckNumber(this)" placeholder="保证金比例（%）" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span> 保证金金额（元）：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="Margin" onblur="CheckNumber(this)" placeholder="保证金金额" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span> 保函受益人名称：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="Bene"  placeholder="保函受益人名称" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span>担保类型：</label>
+                                <div class="col-sm-8">
+                                    <select name="" id="Category" class="form-control">
+                                        <option value="0">投标</option>
+                                        <option value="1">履约</option>
+                                        <option value="2">预付款</option>
+                                        <option value="3">农民工工资支付</option>
+                                        <option value="4">业主支付</option>
+                                        <option value="5">质量</option>
+                                        <option value="6">资本金</option>
+                                        <option value="7">房屋质量</option>
+                                        <option value="8">其他</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">实际竣工时间：</label>
+                                <div class="col-sm-8" style="">
+                                    <input type="text" id="Duration"  class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"> 工程所在地：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control " id="province"  style="width: 30%;display: inline-block"></select>
+                                    <select class="form-control" id="city" style="width: 30%;display: inline-block"></select>
+                                    <select class="form-control" id="district"  style="width: 30%;display: inline-block"> </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">上传保函：</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group m-b">
+                                        <div class="input-group-btn">
+                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                    type="button" aria-expanded="false">
+                                                分组信息 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" id="Lgroup">
+
+                                            </ul>
+                                        </div>
+                                        <input type="text" class="form-control hidden"  id="GtypeId">
+                                        <input type="text" class="form-control"  id="GtypeName">
+                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-danger" onclick="addgroup(this,0)">新建</button>
+                                                            <button type="button" class="btn" onclick="editgroup(this)">编辑</button>
+                                                            <button type="button" class="btn btn-default" onclick="detgroup(this)">删除</button>
+                                                        </span>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-btn">
+                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                    type="button" aria-expanded="false">
+                                                图片名称 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" id="Lgroup_child">
+
+                                            </ul>
+                                        </div>
+                                        <input type="text" class="form-control hidden" id="GtypeImgId" >
+                                        <input type="text" class="form-control" id="GtypeImgName">
+                                        <span class="input-group-btn">
+                                                 <div class="btn-group">
+                                                    <label class="btn btn-danger">
+                                                        <input type="file" accept="*" name="Lgroup_child[]"  multiple="multiple" onchange="uploadImg(this)" class="hide"> 上传
+                                                    </label>
+                                                </div>
+                                                <button type="button" class="btn btn-info" onclick="openImg(this)">查看</button>
+                                                <button type="button" class="btn btn-default" onclick="delImg(this)">删除</button>
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">备注：</label>
+                                <div class="col-sm-8">
+                                    <textarea  class="form-control" id="Description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-12" id="CGuarantee">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-w-m btn-danger" onclick="addCGuarantee()">增加反担保</button>
+                            </div>
+
+                            <!--<div class="row" ID="" style="border-top:1px solid #ccc;margin-top: 30px">
+                                <div class="col-sm-12" style="text-align: center">
+                                    <div class="form-group" style="margin-top: 20px">
+                                        <h3 >第1个反担保措施
+
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">房产证地址：</label>
+                                        <div class="col-sm-8">
+                                            <div class="m-b">
+                                                <input type="text" name="Paddress"  placeholder="房产证地址" class="form-control">
+                                            </div>
+                                            <div>
+                                                <span id="Pimg_0_disp"></span>
+                                                <div class="btn-group">
+                                                    <label  class="btn btn-danger">
+                                                        <input type="file" accept="*" id="Pimg_0"
+                                                               class="hide" onchange="getFormDataOne(this)"> 上传图片
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">  反担保人身份证号：</label>
+                                        <div class="col-sm-8">
+                                            <div class="m-b">
+                                                <input type="text" name="IDCard" placeholder="反担保人身份证号" class="form-control">
+                                            </div>
+                                            <div>
+                                                <span id="IDimg_0_disp"></span>
+                                                <div class="btn-group">
+                                                    <label  class="btn btn-danger">
+                                                        <input type="file" accept="*"  id="IDimg_0" class="hide" onchange="getFormDataOne(this)"> 上传图片
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label"><span class="text-danger">*</span> 反担保人姓名：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="Name"  placeholder="反担保人姓名" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">  反担保人住址：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="Address" placeholder="反担保人住址" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">  反担保人电话：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="Phone"  placeholder="反担保人电话" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">  房产面积（平米）：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="Area"  placeholder="房产面积" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">   产权比例：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="Proportion"  placeholder="产权比例" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">房产价值：</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="Pvalue"  placeholder="房产价值" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
+
+                        </div>
+                    </div>
+                    <div class="text-center submit" style="margin-top: 30px">
+                        <button type="reset" class="btn btn-w-m btn-default">清空</button>
+                        <button type="button" class="btn btn-w-m btn-info" onclick="save()">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var ProjectID=0;
+    var FileID=0;
+    var Name='新建保函';
+    $(function() {
+        FileID = parseInt(window.location.href.getQueryString("id"))||0;
+        Name = window.location.href.getQueryString("Name")||'新建保函';
+        if(Name){
+            $('.ibox-title h5').html(Name);
+        }
+       // initOrg();
+        SelcetArea();
+        $('#Duration').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+        $('#Expiretime').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+
+        if(FileID>0) {
+            init();
+            initgroup2();
+        }
+    });
+    //添加项目信息
+  /*  function initOrg(){
+        Ajax('/project/allproject','get',{id:0},function (ret) {
+            SelectBox('ProjectID',ret.list,'ID','Name');
+            infoData=ret.list;
+            SelectBox('CompanyID',infoData[0].companyinfo,'ID','Name');
+            $('#ProjectID').change(function () {
+                var val=$(this).val();
+                for(var i=0;i<infoData.length;i++){
+                    if(infoData[i]['ID']==val){
+                        SelectBox('CompanyID',infoData[i].companyinfo,'ID','Name');
+                        break;
+                    }
+                }
+            });
+        });
+    }*/
+
+    //添加项目信息
+    function init() {
+        Ajax('/guarantee/query', 'get', {ID: FileID}, function (ret) {
+            var list = ret.result[0];
+            $('#ProjectID').val(list.CompanyID);
+            $('#CompanyID').val(list.CompanyID);
+            $('#GuaCompany').val(list.GuaCompany);
+            $('#Capital').val(list.Capital);
+            $('#Nature').val(list.Nature);
+            $('#Name').val(list.Name);
+            $('#Amount').val(list.Amount);
+            $('#Kind').val(list.Kind);
+            $('#Deadline').val(list.Deadline);
+
+            $('#Expiretime').val(list.Expiretime);
+            $('#Totalrate').val(list.Totalrate);
+            $('#Total').val(list.Total);
+            $('#RealAC').val(list.RealAC);
+            $('#Marginratio').val(list.Marginratio);
+            $('#Margin').val(list.Margin);
+            $('#Bene').val(list.Bene);
+            $('#Duration').val(list.Duration);
+            $('#province').val(list.PID);
+            $('#city').append('<option value="'+list.CID+'">'+list.Cname+'</option>');
+            $('#district').append('<option value="'+list.DID+'">'+list.Dname+'</option>');
+            $('#Description').val(list.Description);
+            var str='';
+
+            if(list.CGuarantee.length){
+                for(var i=0;i<list.CGuarantee.length;i++){
+                    var data=list.CGuarantee[i];
+                    str+='<div class="row" id="' + data.ID + '"  style="border-top:1px solid #ccc;margin-top: 30px">\
+                    <div class="col-sm-12" style="text-align:center">\
+                    <div class="form-group" style="margin-top: 20px">\
+                    <h3>第' + (i + 1) + '反担保措施</h3>\
+                    </div></div>\
+                    <div class="col-sm-6">\
+                    <div class="form-group">\
+                    <label class="col-sm-3 control-label">房产证地址：</label>\
+                    <div class="col-sm-8">\
+                    <div class="m-b"><input type="text"  name="Paddress" placeholder="" value="'+data.Paddress+'" class="form-control"></div><div>\
+                    <span id="Pimg_'+i+'_disp"><img src="'+localHost+data.Pimg+'" style="max-height: 100px"  alt=""/></span>\
+                    <div class="btn-group"><label  class="btn btn-danger"><input type="file" accept="*"  id="Pimg_' + i + '" class="hide" onchange="getFormDataOne(this)">上传图片</label></div>\
+                    </div></div></div></div>\
+                    <div class="col-sm-6">\
+                    <div class="form-group">\
+                    <label class="col-sm-3 control-label">反担保人身份证号：</label>\
+                    <div class="col-sm-8">\
+                    <div class="m-b"><input type="text" onblur="CheckCard(this)" name="IDCard" placeholder="反担保人身份证号" value="' + data.IDCard + '" class="form-control"></div><div>\
+                    <span id="IDimg_' + i + '_disp"><img src="' + localHost + data.IDimg + '" style="max-height: 100px"  alt=""/></span>\
+                    <div class="btn-group"><label  class="btn btn-danger"><input type="file" accept="*"  id="IDimg_' + i + '" class="hide" onchange="getFormDataOne(this)">上传图片</label></div>\
+                    </div></div></div></div>\
+                    <div class="col-sm-6">\
+                    <div class="form-group">\
+                    <label class="col-sm-3 control-label"><span class="text-danger">*</span>反担保人姓名：</label>\
+                    <div class="col-sm-8">\
+                    <input type="text" name="Name" value="' + data.Name + '" placeholder="反担保人姓名" class="form-control">\
+                    </div></div></div>\
+                    <div class="col-sm-6"><div class="form-group">\
+                    <label class="col-sm-3 control-label">反担保人住址：</label>\
+                    <div class="col-sm-8"><input type="text" name="Address" value="' + data.Address + '" placeholder="反担保人住址" class="form-control">\
+                    </div></div></div>\
+                    <div class="col-sm-6"><div class="form-group">\
+                    <label class="col-sm-3 control-label">反担保人电话：</label>\
+                    <div class="col-sm-8"><input type="text" name="Phone" onblur="CheckPhone(this)" value="' + data.Phone + '" placeholder="反担保人电话" class="form-control">\
+                    </div></div></div>\
+                    <div class="col-sm-6"><div class="form-group">\
+                    <label class="col-sm-3 control-label">房产面积（平米）：</label>\
+                    <div class="col-sm-8"><input type="text" name="Area" onblur="CheckNumber(this)" value="' + data.Area + '" placeholder="房产面积" class="form-control">\
+                    </div></div></div>\
+                    <div class="col-sm-6"><div class="form-group">\
+                    <label class="col-sm-3 control-label">产权比例：</label>\
+                    <div class="col-sm-8"><input type="text" name="Proportion" onblur="CheckNumber(this)"  value="' + data.Proportion + '" placeholder="产权比例" class="form-control">\
+                    </div></div></div>\
+                    <div class="col-sm-6"><div class="form-group">\
+                    <label class="col-sm-3 control-label">房产价值：</label>\
+                    <div class="col-sm-8"><input type="text" name="Pvalue" onblur="CheckNumber(this)"  value="' + data.Pvalue + '" placeholder="房产价值" class="form-control">\
+                    </div></div></div>\
+                    </div>'
+                }
+            }
+
+
+            $('#CGuarantee').append(str);
+            $('#CGuarantee [name="Pimg"]','[name="IDimg"]').on('change',function () {
+                getFormDataOne($(this)[0]);
+            })
+
+        });
+    }
+
+    //添加图片分组性息
+    function initgroup2() {
+        Ajax('/guarantee/getgroup','get',{ID:FileID}, function (ret) {
+            if(ret.group_list){
+                $('#Lgroup').html(SetGroup(ret.group_list));
+            }
+            initgroup();
+        });
+    }
+    function initgroup(){
+        $('.input-group').on('click','li a', function () {
+            var id= $(this).attr('attrId');
+            var parid=$(this).parents('ul').attr('id');
+            if(parid=='Lgroup'){
+                Ajax('/company/pic/list','get',{ID: id}, function (ret) {
+                    $('#'+parid+'_child').html(SetGroup(ret.pic_list));
+                });
+            }
+            $(this).parents('.input-group-btn').siblings('input').eq(0).val(id);
+            $(this).parents('.input-group-btn').siblings('input').eq(1).val($(this).text())
+        });
+    }
+
+
+
+    //分组信息
+    function addgroup(_this,Gtype) {
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.find('#GtypeId');
+        var GtypeName=oParents.find('#GtypeName');
+        if(!GtypeName.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+        var data={
+            Gtype:Gtype,
+            Name:GtypeName.val(),
+            CID:FileID
+        };
+        Ajax('/guarantee/addgroup','post',data,function (ret) {
+            Alert('新建分组成功！！');
+            dropdown.append('<li><a href="javascript:void(0)" attrId='+ret.id+'>'+ret.name+'</a></li>');
+            GtypeId.val(ret.id);
+            GtypeName.val(ret.name);
+            initgroup()
+        })
+    }
+    function editgroup(_this) {
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.find('#GtypeId');
+        var GtypeName=oParents.find('#GtypeName');
+        if(!GtypeName.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+        var data={
+            ID:GtypeId.val(),
+            Name:GtypeName.val(),
+        };
+        Ajax('/company/group/edit','post',data,function (ret) {
+            Alert('编辑建分组成功！！');
+            dropdown.find('a[attrId="'+GtypeId.val()+'"]').html(GtypeName.val());
+        })
+    }
+    function detgroup(_this) {
+        Confirm("确定删除分组？",
+            function () {
+                var oParents=$(_this).parents('.input-group');
+                var dropdown=oParents.find('.dropdown-menu');
+                var GtypeId=oParents.find('#GtypeId');
+                var GtypeName=oParents.find('#GtypeName');
+                var ulnode = $(_this).parents('[class="input-group m-b"]').next().find('ul');
+                if(!GtypeName.val()){
+                    Alert('请选择分组信息！!');
+                    return;
+                }
+                var data={
+                    ID:GtypeId.val()
+                };
+                Ajax('/company/deletepicgroup','delete',data,function (ret) {
+                    dropdown.find('a[attrId="'+GtypeId.val()+'"]').parent().empty();
+                    GtypeId.val('');
+                    GtypeName.val('');
+                    ulnode.empty();
+                    Alert('删除分组成功！！');
+                    window.top.close(LayerConfirm)
+                })
+            },function () {})
+    }
+
+    //分组图片
+    function uploadImg(_this){
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.prev().find('#GtypeId');
+        var GtypeImgId=oParents.find('#GtypeImgId');
+        var GtypeImgName=oParents.find('#GtypeImgName');
+
+        if(!GtypeId.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+
+        var formData=getFormData(_this);
+        formData.append('GID',GtypeId.val());
+
+        Ajax('/labor/uploadpic','post',formData,function (ret) {
+            Alert('上传图片成功！！');
+            for(var i=0;i<ret.data.length;i++){
+                dropdown.append('<li><a attrId='+ret.data[i].id+'>'+ret.data[i].name+'</a></li>');
+            }
+            initgroup();
+        },function(){},true)
+    }
+    function openImg(_this) {
+        var oParents=$(_this).parents('.input-group');
+        var GtypeImgId=oParents.find('#GtypeImgId');
+        Ajax('/company/pic/getone','get',{ID:GtypeImgId.val()},function (ret) {
+            Open('','',localHost+ret.url)
+        })
+    }
+    function delImg(_this){
+        Confirm("确定删除图片？",function(){
+            var oParents=$(_this).parents('.input-group');
+            var dropdown=oParents.find('.dropdown-menu');
+            var GtypeImgId=oParents.find('#GtypeImgId');
+            var GtypeImgName=oParents.find('#GtypeImgName');
+            if(!GtypeImgId.val()){
+                Alert('请选择图片信息！!');
+                return;
+            }
+            Ajax('/company/deletepic','delete',{ID:GtypeImgId.val()},function (ret) {
+                dropdown.find('a[attrId="'+GtypeImgId.val()+'"]').parent().empty();
+                GtypeImgId.val('');
+                GtypeImgName.val('');
+                Alert('图片删除成功！！');
+                window.top.close(LayerConfirm)
+            })
+        },function(){})
+    }
+
+
+
+    function group_list(id1,id2){
+        var arr=[];
+        $('#'+id1+' li').each(function (n,ele) {
+            arr.push($(ele).find('a').attr('attrId'));
+        });
+        if(id2){
+            $('#'+id2+' li').each(function (n,ele) {
+                arr.push($(ele).find('a').attr('attrId'));
+            });
+        }
+
+        return arr
+    }
+    function addCGuarantee() {
+        var num=$('#CGuarantee .row').length;
+        var str='<div class="row" style="border-top:1px solid #ccc;margin-top: 30px">\
+                    <div class="col-sm-12" style="text-align:center">\
+                    <div class="form-group" style="margin-top: 20px">\
+                    <h3>第' + (num+1) + '反担保措施</h3>\
+                    </div></div>\
+                    <div class="col-sm-6">\
+                    <div class="form-group">\
+                    <label class="col-sm-3 control-label">房产证地址：</label>\
+                    <div class="col-sm-8">\
+                    <div class="m-b"><input type="text"  name="Paddress" placeholder=""  class="form-control"></div><div>\
+                    <span id="Pimg_'+num+'_disp"></span>\
+                    <div class="btn-group"><label  class="btn btn-danger"><input type="file" accept="*"  id="Pimg_'+num+'" class="hide" onchange="getFormDataOne(this)">上传图片</label></div>\
+                    </div></div></div></div>\
+                    <div class="col-sm-6">\
+                    <div class="form-group">\
+                    <label class="col-sm-3 control-label">反担保人身份证号：</label>\
+                    <div class="col-sm-8">\
+                    <div class="m-b"><input type="text" onblur="CheckCard(this)" name="IDCard" placeholder="反担保人身份证号"  class="form-control"></div><div>\
+                    <span id="IDimg_' + num + '_disp"></span>\
+                    <div class="btn-group"><label  class="btn btn-danger"><input type="file" accept="*"  id="IDimg_'+num+'" class="hide" onchange="getFormDataOne(this)">上传图片</label></div>\
+                    </div></div></div></div>\
+                    <div class="col-sm-6">\
+                    <div class="form-group">\
+                    <label class="col-sm-3 control-label"><span class="text-danger">*</span>反担保人姓名：</label>\
+                    <div class="col-sm-8">\
+                    <input type="text" name="Name"  placeholder="反担保人姓名" class="form-control">\
+                    </div></div></div>\
+                    <div class="col-sm-6"><div class="form-group">\
+                    <label class="col-sm-3 control-label">反担保人住址：</label>\
+                    <div class="col-sm-8"><input type="text" name="Address" placeholder="反担保人住址" class="form-control">\
+                    </div></div></div>\
+                    <div class="col-sm-6"><div class="form-group">\
+                    <label class="col-sm-3 control-label">反担保人电话：</label>\
+                    <div class="col-sm-8"><input type="text" name="Phone" onblur="CheckPhone(this)"  placeholder="反担保人电话" class="form-control">\
+                    </div></div></div>\
+                    <div class="col-sm-6"><div class="form-group">\
+                    <label class="col-sm-3 control-label">房产面积（平米）：</label>\
+                    <div class="col-sm-8"><input type="text" name="Area"  onblur="CheckNumber(this)"  placeholder="房产面积" class="form-control">\
+                    </div></div></div>\
+                    <div class="col-sm-6"><div class="form-group">\
+                    <label class="col-sm-3 control-label">产权比例：</label>\
+                    <div class="col-sm-8"><input type="text" name="Proportion"  onblur="CheckNumber(this)"  placeholder="产权比例" class="form-control">\
+                    </div></div></div>\
+                    <div class="col-sm-6"><div class="form-group">\
+                    <label class="col-sm-3 control-label">房产价值：</label>\
+                    <div class="col-sm-8"><input type="text" name="Pvalue"  onblur="CheckNumber(this)"  placeholder="房产价值" class="form-control">\
+                    </div></div></div>\
+                    </div>';
+            $('#CGuarantee').append(str);
+            $('#CGuarantee [name="Pimg"]','[name="IDimg"]').on('change',function () {
+                getFormDataOne($(this)[0]);
+            })
+    }
+    function getCGuarantee() {
+        var leng=$('#CGuarantee .row').length;
+        var arr=[];
+        for(var i=0;i<leng;i++){
+            var obj={Name:$('[name="Name"]').eq(i).val(),
+                IDCard:$('[name="IDCard"]').eq(i).val(),
+                Area:$('[name="Area"]').eq(i).val(),
+                Address:$('[name="Address"]').eq(i).val(),
+                Phone:$('[name="Phone"]').eq(i).val(),
+                Pvalue:$('[name="Pvalue"]').eq(i).val(),
+                Proportion:$('[name="Proportion"]').eq(i).val(),
+                Paddress:$('[name="Paddress"]').eq(i).val()};
+
+            if($('#CGuarantee .row').eq(i).attr('ID')){
+                obj.ID=$('#CGuarantee .row').eq(i).attr('ID')
+            }
+            arr.push(obj)
+        }
+        return arr
+    }
+    
+    function save() {
+        if(!$('#province').val()){
+            Alert('必须选择地区')
+        }
+        var formData = new FormData();
+        formData.append('ProjectID',$('#ProjectID').val());
+        formData.append('CompanyID',$('#CompanyID').val());
+        formData.append('GuaCompany',$('#GuaCompany').val());
+        formData.append('Capital',$('#Capital').val());
+        formData.append('Nature',$('#Nature').val());
+        formData.append('Name',$('#Name').val());
+        formData.append('Amount',$('#Amount').val());
+        formData.append('Kind',$('#Kind').val());
+        formData.append('Deadline',$('#Deadline').val());
+        formData.append('Expiretime',$('#Expiretime').val());
+        formData.append('Totalrate',$('#Totalrate').val());
+        formData.append('Total',$('#Total').val());
+        formData.append('RealAC',$('#RealAC').val());
+        formData.append('Marginratio',$('#Marginratio').val());
+        formData.append('Margin',$('#Margin').val());
+        formData.append('Bene',$('#Bene').val());
+        formData.append('Category',$('#Category').val());
+        formData.append('Duration',$('#Duration').val());
+        formData.append('PID',$('#province').val()||0);
+        formData.append('CID',$('#city').val()||0);
+        formData.append('DID',$('#district').val()||0);
+        formData.append('Description',$('#Description').val());
+        formData.append('group_list',JSON.stringify(group_list('Lgroup')));
+
+        formData.append('CGuarantee_list',JSON.stringify(getCGuarantee()));
+        var leng=$('#CGuarantee .row').length;
+        for(var j=0;j<leng;j++){
+            if(document.getElementById('IDimg_'+j).files.length>0){
+                formData.append('IDimg_'+j,document.getElementById('IDimg_'+j).files[0]);
+                formData.append('Pimg_'+j,document.getElementById('Pimg_'+j).files[0]);
+            }else{
+                formData.append('IDimg_'+j,'');
+                formData.append('Pimg_'+j,'');
+            }
+        }
+
+        //判断长度是否大于20
+        var check_result = CheckLength(formData)
+        if (check_result[0]) {
+            Alert(check_result[1])
+            return;
+        }
+
+
+        if(FileID>0){
+            formData.append('ID',FileID);
+            Ajax('/guarantee/update','post',formData,function (ret) {
+                Alert('上传成功！！');
+                window.location.href='list.html'
+            },function () {},true)
+        }else{
+            Ajax('/guarantee/create','post',formData,function (ret) {
+                Alert('上传成功！！');
+                window.location.href='list.html'
+            },function () {},true)
+        }
+
+    }
+
+
+</script>
+</body>
+</html>

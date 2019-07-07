@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑项目</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link href="../../js/chosen/chosen.css" rel="stylesheet">
+    <script src="../../js/chosen/chosen.jquery.min.js"></script>
+    <link href="../../js/yselect/ySelect.css" rel="stylesheet">
+    <script src="../../js/yselect/ySelect.js"></script>
+    <style>
+        .fs-wrap{    position: relative;
+            display: inline-block;
+            width: 100%;
+            /* margin: 3px; */
+            font-size: 13px;
+            line-height: 20px;}
+        .fs-label-wrap,.fs-dropdown{
+            left: -3px;
+        }
+    </style>
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>创建项目</h5>
+                </div>
+                <form class="form-horizontal">
+                    <div class="row" style="margin-top: 15px">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span>项目名称：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="" id="Name" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span>项目类型：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="Type">
+                                        <option value="0">政府投资</option>
+                                        <option value="1">民营开发</option>
+                                        <option value="2">国企分包</option>
+                                        <option value="3">其他</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span>担保类型：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="GuaranType">
+                                        <option value="0">投标</option>
+                                        <option value="1">履约</option>
+                                        <option value="2">预付款</option>
+                                        <option value="3">农民工工资支付</option>
+                                        <option value="4">业主支付</option>
+                                        <option value="5">质量</option>
+                                        <option value="6">资本金</option>
+                                        <option value="7">房屋质量</option>
+                                        <option value="8">其他</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span>项目地区：</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" id="province">
+
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" id="city">
+
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" id="district">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span>中标价格：</label>
+                                <div class="col-sm-8">
+                                    <div class="m-b">
+                                        <input type="text" placeholder="" onblur="CheckNumber(this)" id="Price" class="form-control">
+                                    </div>
+                                    <div class="input-group m-b">
+                                        <div class="input-group-btn">
+                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                    type="button" aria-expanded="false">
+                                                分组信息 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" id="Lgroup">
+
+                                            </ul>
+                                        </div>
+                                        <input type="text" class="form-control hidden"  id="GtypeId">
+                                        <input type="text" class="form-control"  id="GtypeName">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-danger" onclick="addgroup(this,0)">新建</button>
+                                            <button type="button" class="btn" onclick="editgroup(this)">编辑</button>
+                                            <button type="button" class="btn btn-default" onclick="detgroup(this)">删除</button>
+                                        </span>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-btn">
+                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                    type="button" aria-expanded="false">
+                                                图片名称 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" id="Lgroup_child">
+
+                                            </ul>
+                                        </div>
+                                        <input type="text" class="form-control hidden" id="GtypeImgId" >
+                                        <input type="text" class="form-control" id="GtypeImgName">
+                                        <span class="input-group-btn">
+                                             <div class="btn-group">
+                                                <label class="btn btn-danger">
+                                                    <input type="file" accept="*" name="Lgroup_child[]"  multiple="multiple" onchange="uploadImg(this)" class="hide"> 上传
+                                                </label>
+                                            </div>
+                                            <button type="button" class="btn btn-info" onclick="openImg(this)">查看</button>
+                                            <button type="button" class="btn btn-default" onclick="delImg(this)">删除</button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">担保金额：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="" onblur="CheckNumber(this)" id="GAmount" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">项目委托人：</label>
+                                <div class="col-sm-8" id="Phone">
+                                    <input type="text" placeholder="名称" style="width: 30%;display: inline-block"
+                                           name="name" class="form-control">
+                                    <input type="text" placeholder="职位" style="width: 30%;display: inline-block"
+                                           name="post" class="form-control">
+                                    <input type="text" placeholder="电话" style="width: 30%;display: inline-block" onblur="CheckPhone(this)"
+                                           name="phone" class="form-control">
+                                    <button type="button" class="btn btn-danger" id="addPhone"
+                                            onclick="addPhones(this.id)" style="margin-top: -3px;"><i
+                                            class="fa fa-plus-circle"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">项目不良信息：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="Status">
+                                        <option value="0">正常</option>
+                                        <option value="1">常态监管</option>
+                                        <option value="2">重点</option>
+                                        <option value="3">严重</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">项目地址：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="" id="Address" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">项目农民工工资占比：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="" id="WagePercent" onblur="CheckNumber(this)" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">工期：</label>
+                                <div class="col-sm-3">
+                                    <input type="text" placeholder="" id="StartTime" class="form-control" readonly>
+                                </div>
+                                <label class="col-sm-1 control-label " style="text-align: center">至</label>
+                                <div class="col-sm-3">
+                                    <input type="text" placeholder="" id="EndTime" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">延期时间：</label>
+                                <div class="col-sm-3">
+                                    <input type="text" placeholder="" id="Duration" readonly class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">代发银行：</label>
+                                <div class="col-sm-8">
+                                    <select name="" id="bankId" class="form-control">
+                                        <option value="">中国农业银行</option>
+                                        <option value="">中国建设银行</option>
+                                        <option value="">中国工商银行</option>
+                                        <option value="">中国银行</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span>建设方：</label>
+                                <div class="col-sm-5">
+                                    <select class="form-control Company"  id="Build" > </select>
+                                </div>
+                                <div class="col-sm-3" style="padding-left: 0">
+                                    <a href="../company/edit.html" class="btn btn-info">增加</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span>业主负责人：</label>
+                                <div class="col-sm-5">
+                                    <select class="form-control Company_disp" id="Build_disp" multiple="multiple" size="1"> </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span>施工方：</label>
+                                <div class="col-sm-5">
+                                    <select class="form-control Company" id="Cons"></select>
+                                </div>
+                                <div class="col-sm-3" style="padding-left: 0">
+                                    <a href="../company/edit.html" class="btn btn-info">增加</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><span class="text-danger">*</span>施工负责人：</label>
+                                <div class="col-sm-5">
+                                    <select class="form-control Company_disp" id="Cons_disp"   multiple="multiple" size="1"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" style="width: 11.9%;text-align: right">备注：</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="Description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center submit" style="margin-top: 30px">
+                        <button type="reset" class="btn btn-w-m btn-default">清空</button>
+                        <button type="button" class="btn btn-w-m btn-info" onclick="save()">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var ProjectID=0;
+    var Name='';
+    var TempBuild=0;
+    var TempCons=0;
+    $(function() {
+        ProjectID = parseInt(window.location.href.getQueryString("id"));
+        Name = window.location.href.getQueryString("Name");
+        if(Name){
+            $('.ibox-title h5').html(Name);
+        }
+
+        SelcetArea();
+        // setTimeout(function () {
+        //     initCompany();
+        // },1000);
+
+        initgroup2();
+        $('#StartTime').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+        $('#EndTime').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+        $('#Duration').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+        setTimeout(init(), 500);
+    });
+
+    //添加图片分组性息
+    function initgroup2() {
+        Ajax('/project/group/list','get',{ID:ProjectID}, function (ret) {
+            if(ret.group&&ret.group.project){
+                $('#Lgroup').html(SetGroup(ret.group.project));
+            }
+            initgroup();
+        });
+    }
+
+    //点击分组修改图片信息
+    function initgroup(){
+        $('.input-group').on('click','li a', function () {
+            var id= $(this).attr('attrId');
+            var parid=$(this).parents('ul').attr('id');
+            if(parid=='Lgroup'){
+                Ajax('/company/pic/list','get',{ID: id}, function (ret) {
+                    $('#'+parid+'_child').html(SetGroup(ret.pic_list));
+                });
+            }
+            $(this).parents('.input-group-btn').siblings('input').eq(0).val(id);
+            $(this).parents('.input-group-btn').siblings('input').eq(1).val($(this).text())
+        });
+    }
+
+
+    //添加公司和选职位
+    function initCompany() {
+        Ajax('/company/allcompany','get','',function (ret) {
+            var list=ret.list;
+            SelectBox2($('#Build'),list,'ID','Name');
+            SelectBox2($('#Cons'),list,'ID','Name');
+            $('#Build').chosen();
+            $('#Cons').chosen();
+
+            if (TempBuild!=0 || TempCons!=0){
+                $('#Build').val(TempBuild)
+                $('#Cons').val(TempCons)
+                $('#Build').trigger('chosen:updated')
+                $('#Cons').trigger('chosen:updated')
+            }
+        });
+
+
+
+        $('.Company').change(function () {
+            val=$(this).val();
+            idName=$(this).attr('id');
+            $childIdName=$('#'+idName+'_disp');
+            if($childIdName.length>0){
+                Ajax('/project/companyinfo','get',{ID:val},function (ret) {
+                    var list=ret.companyinfo;
+                    function SelectBox3(node,arr,valId,Name,phone,post){
+                        if(arr){
+                            var optionstring='';
+                            $.each(arr,function(key,value){
+                                optionstring+= "<option value=\"" + value[valId] + "\" >" + value[Name]+'&nbsp;'+value[phone]+'&nbsp;'+value[post] + "</option>";
+                            });
+                            node.html(optionstring);
+                        }
+                    }
+                    $childIdName.empty();
+                    SelectBox3($childIdName,list,'name','name','phone','post');
+                    $childIdName.ySelect();
+                });
+            }
+        })
+    }
+    function addPhones2(id,data){
+        var str='';
+        if(data.length>0){
+            for(var i=0;i<data.length;i++){
+                str+=
+                    '<input type="text" placeholder="名称" value="'+data[i].name+'" style="width: 30%;display: inline-block;margin-top: 10px" name="name" class="form-control">&nbsp;'+
+                    '<input type="text" placeholder="职位" value="'+data[i].post+'" style="width: 30%;display: inline-block;margin-top: 10px" name="post" class="form-control">&nbsp;'+
+                    '<input type="text" placeholder="电话" onblur="CheckPhone(this)" value="'+data[i].phone+'" style="width: 30%;display: inline-block;margin-top: 10px" name="phone" class="form-control">&nbsp;';
+            }
+            $('#'+id).html(str+'<button type="button" class="btn btn-danger" id="addPhone" onclick="addPhones(this.id)"  style="margin-top: -3px;"><i   class="fa fa-plus-circle"></i></button>');
+        }
+    };
+    function setCompanyUser(id,data){
+       $('#'+id+'_disp').append('<option value="'+data+'">'+data+'</option>');
+    };
+    function init() {
+        Ajax('/project/query', 'get', {ID: ProjectID}, function (ret) {
+            var list = ret.project;
+            $('#Name').val(list.Name);
+            $('#Type').val(list.Type);
+            $('#GuaranType').val(list.GuaranType);
+            $('#Price').val(list.Price);
+            $('#Duration').val(list.Duration);
+            $('#GAmount').val(list.GAmount);
+            $('#WagePercent').val(list.WagePercent);
+            $('#StartTime').val(list.StartTime);
+            $('#EndTime').val(list.EndTime);
+            $('#Address').val(list.Address);
+
+            $('#Build').val(list.Build);
+            $('#Cons').val(list.Cons);
+            TempBuild=list.Build;
+            TempCons=list.Cons;
+            setCompanyUser('Cons',list.ConsManager);
+            setCompanyUser('Build',list.OwnerManager);
+
+            $('#Description').val(list.Description);
+            $('#Status').val(list.Status);
+
+            $('#province').val(list.PID);
+            $('#city').append('<option value="'+list.CID+'">'+list.CID_Name+'</option>');
+            $('#district').append('<option value="'+list.DID+'">'+list.DID_Name+'</option>');
+
+            addPhones2('Phone',list.PrinPical);        //项目委托人
+            $('#group_list').val();
+            initCompany();
+        });
+    }
+
+    //添加职位
+    function addPhones(id){
+        var addPhone=$('#'+id);
+        var name=addPhone.siblings('input[name="name"]').last();
+        var post=addPhone.siblings('input[name="post"]').last();
+        var phone=addPhone.siblings('input[name="phone"]').last();
+
+        if(name.val()&&post.val()&&phone.val()){
+            var str='<input type="text" placeholder="名称"  style="width: 30%;display: inline-block;margin-top: 10px" name="name" class="form-control">&nbsp;'+
+                '<input type="text" placeholder="职位" style="width: 30%;display: inline-block;margin-top: 10px" name="post" class="form-control">&nbsp;'+
+                '<input type="text" placeholder="电话" onblur="CheckPhone(this)" style="width: 30%;display: inline-block;margin-top: 10px" name="phone" class="form-control">&nbsp;';
+            addPhone.before(str)
+        }else{
+            Alert('请先填写完联系方式！！')
+        }
+    }
+
+    //分组信息
+    function addgroup(_this,Gtype) {
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.find('#GtypeId');
+        var GtypeName=oParents.find('#GtypeName');
+        if(!GtypeName.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+        var data={
+            Gtype:Gtype,
+            Name:GtypeName.val(),
+            CID:ProjectID
+        };
+        Ajax('/project/group/create','post',data,function (ret) {
+            Alert('新建分组成功！！');
+            dropdown.append('<li><a href="javascript:void(0)" attrId='+ret.id+'>'+ret.name+'</a></li>');
+            GtypeId.val(ret.id);
+            GtypeName.val(ret.name);
+            initgroup()
+        })
+    }
+    function editgroup(_this) {
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.find('#GtypeId');
+        var GtypeName=oParents.find('#GtypeName');
+        if(!GtypeName.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+        var data={
+            ID:GtypeId.val(),
+            Name:GtypeName.val(),
+        };
+        Ajax('/company/group/edit','post',data,function (ret) {
+            Alert('编辑建分组成功！！');
+            dropdown.find('a[attrId="'+GtypeId.val()+'"]').html(GtypeName.val());
+        })
+    }
+    function detgroup(_this) {
+        Confirm("确定删除分组？",
+            function () {
+                var oParents=$(_this).parents('.input-group');
+                var dropdown=oParents.find('.dropdown-menu');
+                var GtypeId=oParents.find('#GtypeId');
+                var GtypeName=oParents.find('#GtypeName');
+                var ulnode = $(_this).parents('[class="input-group m-b"]').next().find('ul')
+                if(!GtypeName.val()){
+                    Alert('请选择分组信息！!');
+                    return;
+                }
+                var data={
+                    ID:GtypeId.val()
+                };
+                Ajax('/company/deletepicgroup','delete',data,function (ret) {
+                    dropdown.find('a[attrId="'+GtypeId.val()+'"]').parent().empty();
+                    GtypeId.val('');
+                    GtypeName.val('');
+                    ulnode.empty()
+                    Alert('删除分组成功！！');
+                    window.top.close(LayerConfirm)
+                })
+            },function () {})
+    }
+
+    //分组图片
+    function uploadImg(_this){
+        var oParents=$(_this).parents('.input-group');
+        var dropdown=oParents.find('.dropdown-menu');
+        var GtypeId=oParents.prev().find('#GtypeId');
+        var GtypeImgId=oParents.find('#GtypeImgId');
+        var GtypeImgName=oParents.find('#GtypeImgName');
+
+        if(!GtypeId.val()){
+            Alert('请选择分组信息！!');
+            return;
+        }
+
+        var formData=getFormData(_this);
+        formData.append('ID',GtypeId.val());
+        formData.append('ProgressID',0);
+        formData.append('IsCreate',1);
+
+
+        Ajax('/project/img/upload','post',formData,function (ret) {
+            Alert('上传图片成功！！');
+            for(var i=0;i<ret.data.length;i++){
+                dropdown.append('<li><a attrId='+ret.data[i].id+'>'+ret.data[i].name+'</a></li>');
+            }
+            GtypeImgId.val(ret.id);
+            GtypeImgName.val(ret.name);
+            initgroup();
+        },function(){},true)
+    }
+    function openImg(_this) {
+        var oParents=$(_this).parents('.input-group');
+        var GtypeImgId=oParents.find('#GtypeImgId');
+        Ajax('/company/pic/getone','get',{ID:GtypeImgId.val()},function (ret) {
+            Open('','',localHost+ret.url)
+        })
+    }
+    function delImg(_this){
+        Confirm("确定删除图片？",function(){
+            var oParents=$(_this).parents('.input-group');
+            var dropdown=oParents.find('.dropdown-menu');
+            var GtypeImgId=oParents.find('#GtypeImgId');
+            var GtypeImgName=oParents.find('#GtypeImgName');
+            if(!GtypeImgId.val()){
+                Alert('请选择图片信息！!');
+                return;
+            }
+            Ajax('/company/deletepic','delete',{ID:GtypeImgId.val()},function (ret) {
+                dropdown.find('a[attrId="'+GtypeImgId.val()+'"]').parent().empty();
+                GtypeImgId.val('');
+                GtypeImgName.val('');
+                Alert('图片删除成功！！');
+                window.top.close(LayerConfirm)
+            })
+        },function(){})
+    }
+
+
+    function getPhone(){
+        var arr=[];
+        $('#Phone input[name="name"]').each(function (n,ele) {
+            arr.push({
+                name:$(ele).val(),
+                post:$('#Phone input[name="post"]').eq(n).val(),
+                phone:$('#Phone input[name="phone"]').eq(n).val(),
+            })
+        });
+        return arr;
+    }
+    function group_list(id1,id2){
+        var arr=[];
+        $('#'+id1+' li').each(function (n,ele) {
+            arr.push($(ele).find('a').attr('attrId'));
+        });
+        if(id2){
+            $('#'+id2+' li').each(function (n,ele) {
+                arr.push($(ele).find('a').attr('attrId'));
+            });
+        }
+
+        return arr
+    }
+    function getCompanyUser(id){
+        return JSON.stringify({
+            id:$('#'+id).val(),
+            name:$('#'+id+'_disp').val()
+        })
+    }
+
+    function save() {
+        if(!$('#province').val()){
+            Alert('必须选择地区')
+        }
+        var formData = new FormData();
+        formData.append('ID',ProjectID);
+        formData.append('Name',$('#Name').val());
+        formData.append('Type',$('#Type').val());
+        formData.append('GuaranType',$('#GuaranType').val());
+        formData.append('Price',$('#Price').val());
+        formData.append('Duration',$('#Duration').val());
+        formData.append('GAmount',$('#GAmount').val());
+        formData.append('WagePercent',$('#WagePercent').val());
+        formData.append('StartTime',$('#StartTime').val());
+        formData.append('EndTime',$('#EndTime').val());
+        formData.append('Address',$('#Address').val());
+
+        formData.append('Build',$('#Build').val());
+        formData.append('Cons',$('#Cons').val());
+        formData.append('ConsManager',$('#Cons_disp').parent('.fs-wrap').find('.fs-label').html()||$('#Cons_disp').text());
+        formData.append('OwnerManager',$('#Build_disp').parent('.fs-wrap').find('.fs-label').html()||$('#Build_disp').text());
+
+        formData.append('Description',$('#Description').val());
+        formData.append('Status',$('#Status').val());
+        formData.append('PID',$('#province').val());
+        formData.append('CID',$('#city').val());
+        formData.append('DID',$('#district').val());
+        formData.append('Total',0);
+        formData.append('TotalPay',0);
+        formData.append('Issue',0);
+        formData.append('PrinPical',JSON.stringify(getPhone()));
+        formData.append('group_list',JSON.stringify(group_list('Lgroup')));
+
+        //判断长度是否大于20
+        var check_result = CheckLength(formData)
+        if (check_result[0]) {
+            Alert(check_result[1])
+            return;
+        }
+
+        Ajax('/project/update','post',formData,function (ret) {
+            Alert('上传成功！！');
+            window.location.href='list.html'
+        },function () {},true)
+    }
+
+
+</script>
+</body>
+</html>

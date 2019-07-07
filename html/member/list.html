@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+    <style>
+        .search-box div{
+            display: inline-block;
+            margin-right: 50px;
+        }
+        .search-list span:hover{
+            cursor: pointer;
+        }
+    </style>
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+
+    <link href="../../js/page/myPagination.css" rel="stylesheet">
+    <script src="../../js/page/myPagination.js"></script>
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<object classid="clsid:6D2088B7-1B97-4960-9535-5115614F29E0" id="WidControl"  width="1" height="1">
+</object>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>查看劳工</h5>
+                    <div class="ibox-tools">
+                        <a href="edit.html" class="btn btn-info btn-xs">导入模板</a>
+                        <a href="edit.html" class="btn btn-info btn-xs">新建劳工</a>
+                    </div>
+                </div>
+
+                <div class="search">
+                    <div class="search-box">
+                        <div class="input-group" style="display:inline-block">
+                            <select class="form-control" style="width: 150px "id="fuzzy" >
+                                <option value="0">项目名称 </option>
+                                <option value="1">企业名称 </option>
+                            </select>
+                            <input type="text" class="form-control" style="width: 300px" id="fuzzyVal">
+                            <select class="form-control" id="province" style="width: 150px"></select>
+                            <select class="form-control" id="city" style="width: 150px"></select>
+                            <select class="form-control" id="district" style="width: 150px"></select>
+                            <select  class="form-control" id="Isbad" style="width: 150px">
+                                <option value="2">全部</option>
+                                <option value="0">无不良记录</option>
+                                <option value="1">有不良记录</option>
+                            </select>
+                            <input type="text" class="form-control" placeholder="输入姓名" id="Name" style="width: 150px">
+                            <input type="text" class="form-control" placeholder="输入身份证"  id="IDCard" style="width: 150px">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger" onclick="search()">搜索</button>
+                                 <button type="button" class="btn btn-danger" onclick="Idcard()" ><i class="fa fa-camera"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                   <div class="search-box">
+                       <div>
+                           <label>性别：</label>
+                           <div class="search-list" id="Sex">
+                               <span class="active" id="Sex_2">全部</span>
+                               <span id="Sex_1">男</span>
+                               <span id="Sex_0">女</span>
+                           </div>
+                       </div>
+                       <div>
+                           <label>工种：</label>
+                           <div class="search-list" id="JobType">
+                               <span class="active" id="JobType_5">全部</span>
+                               <span id="JobType_0">钢筋工</span>
+                               <span id="JobType_1">架子工</span>
+                               <span id="JobType_2">模板工</span>
+                               <span id="JobType_3">通风工</span>
+                               <span id="JobType_4">机械设备按装工</span>
+                           </div>
+                       </div>
+                       <div>
+                           <label>年龄：</label>
+                           <div class="search-list" id="Age">
+                               <span class="active" id="Age_6">全部</span>
+                               <span id="Age_0">18以下</span>
+                               <span id="Age_1">18-30</span>
+                               <span id="Age_2">30-39</span>
+                               <span id="Age_3">40-49</span>
+                               <span id="Age_4">50-55</span>
+                               <span id="Age_5">55以上</span>
+                           </div>
+                       </div>
+                       <div>
+                           <label>学历：</label>
+                           <div class="search-list" id="Education">
+                               <span class="active" id="Education_7">全部</span>
+                               <span id="Education_0">无</span>
+                               <span id="Education_1">小学</span>
+                               <span id="Education_2">初中</span>
+                               <span id="Education_3">高中</span>
+                               <span id="Education_4">大学</span>
+                               <span id="Education_5">硕士</span>
+                               <span id="Education_6">博士</span>
+                           </div>
+                       </div>
+                   </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="cont-list">
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="pagination" class="pagination"></div>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function Idcard(){
+        var result;
+        //注意：第一个参数为对应的设备端口，USB型为1001，串口型为1至16
+        //第二个参数为文件保存路径及文件名，当为“”时，保存在系统临时目录(由API GetTempPath获得)
+        //ReadCard函数调用示例如下：
+        //result=WidControl.ReadCard(1001,"C:\\wid\\photo.bmp");
+        //result=WidControl.ReadCard(1001,"C:\\wid\\");
+        //result=WidControl.ReadCard(1001,"C:\\wid");
+        //result=WidControl.ReadCard(1001,"");
+        result=WidControl.ReadCard(1001,"C:\\wid\\photo.bmp");
+        //  document.all['Mode'].value=WidControl.GetSAMID();
+        if (result==1){
+            var idCard=WidControl.GetCode();
+            alert(idCard);
+            Ajax('/labor/query', 'GET', {IDCard:idCard}, function (ret) {
+                if(ret.labor_list.length>0){
+                    var listArr = ret.labor_list;
+                    var list=listArr[0];
+                    window.location.href='member/view.html?id='+list.ID+'&Name='+list.Name;
+                }else{
+                    Alert('没有查到用户！！！')
+                }
+
+            })
+        }else{
+            if (result==-1)
+                alert("端口初始化失败！");
+            if (result==-2)
+                alert("请重新将卡片放到读卡器上！");
+            if (result==-3)
+                alert("读取数据失败！");
+            if (result==-4)
+                alert("生成照片文件失败，请检查设定路径和磁盘空间！");
+            if(result == -5)
+                alert("加载动态库失败");
+        }
+    }
+    function fuzzyVal() {
+        var obj = {};
+        var fuzzyVal = $('#fuzzy').val();
+        obj[fuzzyVal] = $('#fuzzyVal').val();
+        return obj;
+    }
+	var Isbad = 2;
+
+	$(function () {
+        Isbad = parseInt(window.location.href.getQueryString("Isbad")) || 2;
+	     if (Isbad == 1) {
+	         $('#Isbad').hide();
+	         $('.ibox-title h5').html('不良劳工');
+	     }
+	     SelcetArea();
+	    var data = {
+			ProjectName: '', 
+			CompanyName: '', 
+			DID: 0, 
+			CID: 0, 
+			PID: 0,
+			Isbad: Isbad,
+			Name: '',
+			IDCard: '',
+            Age_0:6,
+			Sex: 2, 
+			JobType: 5,
+			Education:7,
+	        Page: Page,
+	        PageSize: PageSize,
+	    };
+	    init(data);
+	});
+
+	$('.search-list span').click(function () {
+	    $(this).addClass('active').siblings().removeClass('active');
+    });
+
+	function getIdVal(id) {
+        idVal=$('#'+id).find('.active').attr('id');
+        val=idVal.split('_')[1];
+        return parseInt(val);
+    }
+
+	function search() {
+	    var name = $('#fuzzyVal').val();
+	    if ($('#fuzzy').val() == 0) {
+	        var ProjectName = name;
+	        var CompanyName = '';
+	    } else {
+	        ProjectName = '';
+	        CompanyName = name;
+	    }
+	    var data = {
+            ProjectName:ProjectName,
+            CompanyName:CompanyName,
+            PID: parseInt($('#province').val()) || 0,
+            CID: parseInt($('#city').val()) || 0,
+            DID: parseInt($('#district').val()) || 0,
+            Name: $('#Name').val(),
+            IDCard: $('#IDCard').val(),
+            Isbad: Isbad||parseInt($('#Isbad').val()),
+            Sex: getIdVal('Sex'),
+            JobType: getIdVal('JobType'),
+            Education: getIdVal('Education'),
+            Page: Page,
+            PageSize: PageSize,
+	    };
+	    init(data)
+	}
+	
+	//通过表格
+	function init(data) {
+	    Ajax('/labor/query', 'GET', data, function (ret) {
+	        var str = '';
+	        var listArr = ret.labor_list;
+	        for (var i = 0; i < listArr.length; i++) {
+	            var list=listArr[i];
+	            str += '<li><div class="row"><div class="col-sm-1">'+
+                    '<img src="'+localHost+list.Avatar+'" style="border: 1px solid #ccc" alt="" class="img-responsive"></div>' +
+                    '<div class="col-sm-3">'+
+                        '<div><span class="cont-list-tit">名称:</span>' +
+                            '<a href="./view.html?id='+list.ID+'&Name='+list.Name+'">'+list.Name+'</a></div>' +
+                        '<div><span class="cont-list-tit">性别:</span><span>' + showType(list.Sex) + '</span></div>' +
+                        '<div><span class="cont-list-tit">名族:</span><span>' + list.Nationality + '</span></div>' +
+                        '<div><span class="cont-list-tit">年龄:</span><span href="">' + list.Age + '</span></div>' +
+                        '<div><span class="cont-list-tit">籍贯:</span><span>'+list.PName +'-'+list.CName+'-'+list.DName+'</span></div></div>' +
+	                '<div class="col-sm-3">' +
+                        '<div><span class="cont-list-tit">项目名称:</span>' +
+                            '<a href="../project/view.html?id='+list.ProjectID+'&Name='+list.ProjectName+'">'+list.ProjectName+'</a></div>' +
+                        '<div><span class="cont-list-tit">出生日期:</span>' +
+                            '<span>'+list.Birthday+'</span></div>' +
+                        '<div><span class="cont-list-tit">证件号码:</span>' +
+                            '<span>'+list.IDCard+'</a></div>' +
+                        '<div><span class="cont-list-tit">电话号码:</span>' +
+                            '<span>'+list.Phone+'</span></div>'+
+                        '<div><span class="cont-list-tit">紧急联系人号码:</span>' +
+                            '<span>' +list.EmerCon+'</span></div></div>' +
+	                '<div class="col-sm-3">' +
+	                '<div><span class="cont-list-tit">所属公司:</span>'+'<a href="../company/view.html?CompanyId='+list.CompanyID+'&Name='+list.CompanyName+'">'+list.CompanyName+'</a></div>' +
+	                '<div><span class="cont-list-tit">所属班组:</span><a href="progressNew.html?id='+list.ClassID+'&Name='+list.ClassName+'">'+list.ClassName+'</a></div>' +
+	                '<div><span class="cont-list-tit">工种:</span><span>'+showJobType(list.JobType)+'</span></div>' +
+	                '<div><span class="cont-list-tit">考勤:</span><a>'+'查看'+'</a></div>' +
+	                '<div><span class="cont-list-tit">不良记录:</span>' +
+                '<span class="'+(list.BadRecord==1?'text-danger':'')+'">'+showBad(list.BadRecord)+'</span></div>' +
+	                '</div></div></li>'
+	            }
+	        if (!str) {
+	            $('.cont-list').html('<li class="text-center" style="font-size: 24px;margin: 20px">暂无数据</li>')
+	        } else {
+	            $('.cont-list').html(str);
+	        }
+            myPage(ret.total);
+	    })
+	}
+	
+	function showType(data) {
+	    switch (data) {
+	        case 1:return '男'; break;
+	        case 0:return '女';break;
+	    }
+	}
+
+
+	function showJobType(data) {
+	    switch (data) {
+	        case 0:return '钢筋工'; break;
+	        case 1:return '架子工'; break;
+	        case 2:return '模板工';break;
+	        case 3:return '通风工'; break;
+			case 4:return '机械设备安装工'; break;
+			case 5:return ''; break;
+	    }
+	}
+	
+	function showBad(data) {
+		switch (data) {
+		    case 0:return '无不良记录'; break;
+		    case 1:return '有不良记录'; break;
+		}
+	}
+	
+	function showContact(data) {
+	    return  data.pname + '&nbsp;' + data.phone + '&nbsp;' + data.post + '<br/>'
+	}
+	
+</script>
+</body>
+</html>

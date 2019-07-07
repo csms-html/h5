@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/btpTable/bootstrap-table.css" rel="stylesheet">
+    <script src="../../js/btpTable/bootstrap-table.js"></script>
+    <script src="../../js/btpTable/bootstrap-table-zh-CN.js "></script>
+    <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>查看保函</h5>
+                    <div class="ibox-tools">
+                        <a href="edit.html" class="btn btn-info btn-xs">新建保函</a>
+                    </div>
+                </div>
+                <div class="search" id="search">
+                    <div class="input-group" style="display:inline-block">
+                        <select class="form-control" style="width: 150px" id="fuzzy">
+                            <option value="Number">保函编号</option>
+                            <option value="Kind">保函品种</option>
+                            <option value="ProjectName">项目名称</option>
+                            <option value="CompanyName">担保公司</option>
+                            <option value="Bene">受益人</option>
+                            <option value="Total">保费</option>
+                        </select>
+                        <input type="text" class="form-control" id="fuzzyVal" style="width: 400px">
+                        <select class="form-control" id="province" style="width: 150px"> </select>
+                        <select class="form-control" id="city" style="width: 150px"> </select>
+                        <select class="form-control" id="district" style="width: 150px"> </select>
+                        <input type="text" class="form-control" id="StartTime" placeholder="选择保函开始日期" style="width: 200px">
+                        <input type="text" class="form-control" id="EndTime"  placeholder="选择保函结束日期" style="width: 200px">
+                        <!--<select class="form-control" id="Category" style="width: 150px">-->
+                            <!--<option value="0">全部</option>-->
+                            <!--<option value="1">一般保证</option>-->
+                            <!--<option value="2">连带责任</option>-->
+                            <!--<option value="3">独立保函</option>-->
+                        <!--</select>-->
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" onclick="init()">搜索</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="table">
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function fuzzyVal() {
+        var obj = {};
+        var fuzzyVal = $('#fuzzy').val();
+        obj[fuzzyVal] = $('#fuzzyVal').val();
+        return obj;
+    }
+    function queryParams(params) {
+        return $.extend(fuzzyVal(),{
+            PageSize: params.limit,
+            Page: params.offset / params.limit + 1,
+            PID: $('#PID').val() || 0,
+            DID: $('#DID').val() || 0,
+            CID: $('#CID').val() || 0,
+            StartTime: $('#StartTime').val(),
+            EndTime: $('#EndTime').val(),
+           // Category: $('#Category').val()
+        })
+    }
+
+    $(function () {
+        $('#StartTime').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+        $('#EndTime').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+            maxView: 4, //最高视图 十年视图
+        });
+
+        init()
+
+    });
+
+    function init() {
+        var columns = [
+            {
+                field: 'Number',
+                title: '保函编号',
+                align: 'center',
+            },
+            {
+                field: 'ProjectID',
+                title: '项目名称',
+                align: 'center',
+                width:'200px'
+            },
+            {
+                field: 'CompanyID',
+                title: '公司名称',
+                align: 'center',
+                width:'200px'
+            },
+            {
+                field: 'Area',
+                title: '项目区域',
+                align: 'center',
+                width:'200px',
+                formatter:function (value,row,index) {
+                    return row.Pname+row.Cname+row.Dname
+                }
+            },
+
+            {
+                field: 'Bene',
+                title: '受益人名称',
+                align: 'center',
+            },
+            {
+                field: 'Amount',
+                title: '保费',
+                align: 'center',
+            },
+            {
+                field: 'SignTime',
+                title: '保函开始日期',
+                align: 'center',
+            },
+            {
+                field: 'Expiretime',
+                title: '保函结束日期',
+                align: 'center',
+            },
+            {
+                field: 'IsExpire',
+                title: '是否过期',
+                align: 'center',
+            },
+            {
+                field: 'Category',
+                title: '担保类型',
+                align: 'center',
+                formatter:function (value,row,index) {
+                    switch (parseInt(value)){
+                        case 0:return '投标'; break;
+                        case 1:return '履约'; break;
+                        case 2:return '预付款';break;
+                        case 3:return '农民工工资支付'; break;
+                        case 4:return '业主支付'; break;
+                        case 5:return '质量'; break;
+                        case 6:return '资本金'; break;
+                        case 7:return '房屋质量'; break;
+                        case 8:return '其他'; break;
+                    }
+                }
+            },
+            {
+                title: '操作',
+                align: 'center',
+                formatter: 'Editor',
+            }
+        ];
+
+        showTable('#table', '/guarantee/query', 'get', 'id', columns);
+        /*setTimeout(){
+
+        }*/
+    }
+    function responseHandler(ret) {
+        if (typeof ret === 'string') ret = JSON.parse(ret);
+        setTimeout(function () {
+            $('.pagination-detail').append('<span class="pagination-info" style="margin-left: 40px">担保总额:'+ret.amount_total+'</span>' +
+                '<span class="pagination-info">总保费:'+ret.realac_total+'</span>');
+        },1000);
+
+        if (ret.code == 0) {
+            if (ret.total) {
+                return {
+                    total: ret.total,
+                    data: ret.result
+                };
+            } else {
+                return {
+                    data: ret.result
+                };
+            }
+        } else {
+            Alert('后台出现错误');
+        }
+    };
+    function Editor(value,row,index) {
+        var str='<a href="javascript:void(0)">打印</a>&nbsp;&nbsp;'+
+        '<a href="edit.html?id='+row.ID+'&Name='+row.Name+'">编辑</a>&nbsp;&nbsp;';
+        /*   '<a href="row.id" download="'+row.+'">下载</a>&nbsp;&nbsp;';*/
+        return str;
+    }
+</script>
+
+</html>

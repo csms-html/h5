@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/btpTable/bootstrap-table.css" rel="stylesheet">
+    <script src="../../js/btpTable/bootstrap-table.js"></script>
+    <script src="../../js/btpTable/bootstrap-table-zh-CN.js "></script>
+    <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>薪资计算</h5>
+                    <div class="ibox-tools">
+                        <a href="edit.html" class="btn btn-info btn-xs">新增</a>
+                        <a class="btn btn-info btn-xs">打印</a>
+                    </div>
+                </div>
+                <div class="search" id="search">
+                    <div class="input-group"  style="display:inline-block">
+                        <select class="form-control"  id="fuzzy"  style="width: 150px">
+                            <option value="LaborName">用户名 </option>
+                            <option value="ProjectName">项目名称 </option>
+                            <option value="CompanyName">企业名称 </option>
+                        </select>
+                        <input type="text" class="form-control" id="fuzzyVal" style="width: 400px">
+
+                        <input type="text" class="form-control" placeholder="考勤日期" id="Month" style="width: 200px">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" >搜索</button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                       <table id="table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var id=0;
+    var year=0;
+    var month=0;
+    $(function() {
+        id = parseInt(window.location.href.getQueryString("id")) || 0;
+        Name = window.location.href.getQueryString("Name") || '';
+        year = window.location.href.getQueryString("year") || '';
+        month = window.location.href.getQueryString("month") || '';
+        if(id){
+            $('#fuzzyVal').val(Name);
+            $('#Month').val(year+'-'+month);
+            init()
+        }
+    });
+    $(function () {
+        $('#Month').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm',
+            todayBtn: true,
+            todayHighlight: 1,
+            autoclose: true,
+            minView: 2,//最低视图 小时视图
+        });
+        init();
+    });
+
+    function fuzzyVal() {
+        var obj = {};
+        var fuzzyVal = $('#fuzzy').val();
+        obj[fuzzyVal] = $('#fuzzyVal').val();
+        return obj;
+    }
+    function queryParams(params) {
+        return $.extend(fuzzyVal(),{
+            PageSize: params.limit,
+            Page: params.offset / params.limit + 1,
+            Month: $('#Month').val(),
+            ID: id,
+        })
+    }
+    function responseHandler(ret) {
+        if (typeof ret === 'string') ret = JSON.parse(ret);
+        if (ret.code == 0) {
+            if (ret.total) {
+                return {
+                    total: ret.total,
+                    data: ret.data
+                };
+            } else {
+                return {
+                    data: ret.data
+                };
+            }
+        } else {
+            Alert('后台出现错误');
+        }
+    };
+
+
+    function init() {
+        var columns = [
+            {
+                field: 'Name',
+                title: '劳工姓名',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return '<a href="../member/view.html?id='+row.laborid+'&Name='+value+'">'+value+'</a>'
+                }
+            },
+            {
+                field: 'IDCard',
+                title: '身份证号',
+                align: 'center',
+            },
+            {
+                field: 'date',
+                title: '月份',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return (row.year||'')+'-'+(row.month||'');
+                }
+            },
+            {
+                field: 'JobType',
+                title: '工种',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    var data=parseInt(value);
+                    switch (data) {
+                        case 0:return '钢筋工'; break;
+                        case 1:return '架子工'; break;
+                        case 2:return '模板工';break;
+                        case 3:return '通风工'; break;
+                        case 4:return '机械设备安装工'; break;
+                        case 5:return ''; break;
+                    }
+                }
+            },
+            {
+                field: 'isFeeStand',
+                title: '合同类型',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    var data=parseInt(value);
+                    switch (data) {
+                        case 0:return '临时工'; break;
+                        case 1:return '合同工'; break;
+                    }
+                }
+            },
+            {
+                field: 'type',
+                title: '计酬方式',
+                align: 'center',
+            },
+
+            {
+                field: 'swipe',
+                title: '刷卡合计',
+                align: 'center',
+            },
+            {
+                field: 'manual',
+                title: '手工合计(天)',
+                align: 'center',
+            },
+            {
+                field: 'unit',
+                title: '计酬（日薪）',
+                align: 'center',
+            },
+            {
+                field: 'basicwage',
+                title: '基本工资',
+                align: 'center',
+            },
+            {
+                field: 'overtime',
+                title: '加班工资',
+                align: 'center',
+            },
+            {
+                field: 'subtotal',
+                title: '计酬小计',
+                align: 'center',
+            },
+            {
+                field: 'reward',
+                title: '奖励金额',
+                align: 'center',
+            },
+            {
+                field: 'deduction',
+                title: '扣款金额',
+                align: 'center',
+            },
+            {
+                field: 'total',
+                title: '总计',
+                align: 'center',
+            },
+            {
+                title: '操作',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return '<a href ="../salary/edit.html?id='+row.id+'&laborid='+row.laborid+'&Name='+row.Name+'&year='+row.year+'&month='+row.month+'">' +
+                        '编辑</a>'
+                }
+            },
+        ];
+        showTable('#table', '/attend/salary/query', 'get', 'id', columns);
+    }
+</script>
+</body>
+</html>

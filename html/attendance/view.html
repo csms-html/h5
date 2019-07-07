@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>新建-编辑企业</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/commn.css" rel="stylesheet">
+
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <link href="../../js/btpTable/bootstrap-table.css" rel="stylesheet">
+    <script src="../../js/btpTable/bootstrap-table.js"></script>
+    <script src="../../js/btpTable/bootstrap-table-zh-CN.js "></script>
+<!--    <link href="../../js/plugins/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/plugins/time/bootstrap-datetimepicker.zh-CN.js"></script>-->
+
+    <link href="../../js/plugins/layer/skin/layer.css" rel="stylesheet">
+    <script src="../../js/plugins/layer/layer.min.js"></script>
+    <script src="../../js/common.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5></h5>
+                    <div class="ibox-tools">
+                        <a class="btn btn-info btn-xs">打印</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                       <table id="table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var id=0;
+    var Name='';
+    var year=0;
+    var month=0;
+    $(function() {
+        id = parseInt(window.location.href.getQueryString("id")) || 0;
+        Name = window.location.href.getQueryString("Name") || '';
+        year = window.location.href.getQueryString("year") || '';
+        month = window.location.href.getQueryString("month") || '';
+        if(id){
+            $('.ibox-title h5').html(Name+'的考勤记录');
+            init()
+        }
+    });
+
+    function queryParams(params) {
+        return {
+            Id:id,
+            year:year,
+            month:month,
+        }
+    }
+    function responseHandler(ret) {
+        if (typeof ret === 'string') ret = JSON.parse(ret);
+        if (ret.code == 0) {
+            if (ret.total) {
+                return {
+                    total: ret.total,
+                    data: ret.data
+                };
+            } else {
+                return {
+                    data: ret.data
+                };
+            }
+        } else {
+            Alert('后台出现错误');
+        }
+    };
+
+    //table
+    function showTable(node, url, method, pyKey, columns) {
+        var obj={
+            url: localHost + url,
+            method: method,
+            ajaxOptions: {
+                xhrFields: { //跨域
+                    withCredentials: true
+                },
+                crossDomain: true
+            },
+            idField: pyKey,
+            striped: true,
+            dataField: "data",
+            queryParams: queryParams,
+            responseHandler: responseHandler,
+            columns: columns,
+        };
+        $(node).bootstrapTable('destroy').bootstrapTable(obj)
+    }
+    function init() {
+        var columns = [
+            {
+                field: 'Name',
+                title: '劳工姓名',
+                align: 'center',
+            },
+            {
+                field: 'IDCard',
+                title: '身份证',
+                align: 'center',
+            },
+            {
+                field: 'date',
+                title: '考勤日期',
+                align: 'center',
+            },
+            {
+                field: 'miss',
+                title: '是否缺考',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    if(value=='无缺考'){
+                        return '<span class="text-danger">'+value+'</span>'
+                    }else {
+                        return value
+                    }
+                }
+            },
+            {
+                field: 'amin',
+                title: '上班考勤',
+                align: 'center',
+            },
+            {
+                field: 'amout',
+                title: '中午考勤',
+                align: 'center',
+            },
+            {
+                field: 'pmin',
+                title: '下午考勤',
+                align: 'center',
+            },
+            {
+                field: 'pmout',
+                title: '下班考勤',
+                align: 'center',
+            },
+          /*  {
+                title: '总计出勤',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return   row.length
+                }
+            },*/
+        ];
+        showTable('#table', '/attend/monthinfo', 'get', 'id', columns);
+    }
+</script>
+</body>
+</html>
